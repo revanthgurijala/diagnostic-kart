@@ -34,7 +34,7 @@ export default function Home() {
         {/* Advanced Typography with Gradient */}
         <div className="space-y-4 mb-10 sm:mb-12">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-gray-900 tracking-tight leading-tight">
-            Something Awesome Is <br className="hidden sm:block" />
+            Something Awesome is <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2b5a9e] to-cyan-500 drop-shadow-sm">
               Coming Soon
             </span>
@@ -91,9 +91,8 @@ export default function Home() {
                 </span>
               </div>
               <span className="leading-relaxed text-gray-700 font-medium">
-                Plot No: 44, 1st Floor, Rainbow Meadows,
-                <br />
-                Kistareddypet, Hyderabad, Telangana - 502319
+                Plot No: 44, 1st Floor, Rainbow Meadows, Kistareddypet,
+                Hyderabad, Telangana - 502319
               </span>
             </li>
 
