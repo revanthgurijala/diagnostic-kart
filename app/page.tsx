@@ -77,12 +77,12 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent)] pointer-events-none" />
 
-        <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-full shadow-sm mt-4">
-          <Microscope className="w-4 h-4" /> Scientific
+        <div className="inline-flex flex-wrap justify-center items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 mb-8 text-xs md:text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-[2rem] shadow-sm mt-4">
+          <Microscope className="w-3.5 h-3.5 md:w-4 md:h-4" /> Scientific
           <span className="text-blue-300">•</span>
-          <Activity className="w-4 h-4" /> Personalized
+          <Activity className="w-3.5 h-3.5 md:w-4 md:h-4" /> Personalized
           <span className="text-blue-300">•</span>
-          <ShieldCheck className="w-4 h-4" /> Reliable
+          <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> Reliable
         </div>
 
         <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 max-w-5xl mx-auto leading-[1.2] font-serif">
