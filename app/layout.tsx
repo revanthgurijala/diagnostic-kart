@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-// We use Plus Jakarta Sans for a highly modern, stylish look
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-geist-sans", // Reusing your existing CSS variable so Tailwind picks it up automatically
+// Cormorant Garamond provides a razor-sharp, ultra-premium serif look (especially in italics)
+const cormorant = Cormorant_Garamond({
+  variable: "--font-playfair", // Keeping this variable name so we don't have to rewrite your CSS
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+// DM Sans is a beautiful, geometric, highly readable modern font
+const dmSans = DM_Sans({
+  variable: "--font-lato", // Keeping this variable name so we don't have to rewrite your CSS
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
 });
 
@@ -19,8 +30,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+    <html
+      lang="en"
+      className={`${cormorant.variable} ${dmSans.variable} h-full antialiased scroll-smooth`}
+    >
+      <body className="min-h-screen flex flex-col font-sans bg-[#f8fafc]">
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

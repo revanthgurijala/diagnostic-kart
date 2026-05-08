@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc; /* Soft slate gray-white */
-  --foreground: #0f172a; /* Deep navy */
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* The main body text will use Lato */
+  --font-sans: var(--font-lato);
+  /* We map Playfair Display to font-serif so we can call it on demand */
+  --font-serif: var(--font-playfair);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +24,23 @@
 body {
   background: radial-gradient(circle at top right, #e0f2fe, #f8fafc);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  /* Default all text to the clean Lato font */
+  font-family: var(--font-sans), sans-serif;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(400px);
+    opacity: 0;
+  }
 }

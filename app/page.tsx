@@ -1,4 +1,49 @@
 "use client";
+
+import Image from "next/image";
+
+import {
+  Microscope,
+  Activity,
+  ShieldCheck,
+  ArrowRight,
+  HeartPulse,
+  Dumbbell,
+  ClipboardList,
+  Dna,
+  UserCheck,
+  Beaker,
+  Sparkles,
+  Info,
+  Lightbulb,
+  CheckCircle2,
+  Stethoscope,
+  PawPrint,
+  User,
+  Heart,
+  Brain,
+  TestTubes,
+  LineChart,
+  Settings,
+  RefreshCcw,
+  Crosshair,
+  Fingerprint,
+  Database,
+  HeartHandshake,
+  FileCheck,
+  ShieldPlus,
+  Quote,
+  UserPlus,
+  Bot,
+  MessageSquare,
+  BrainCircuit,
+  ListChecks,
+  Eye,
+  Target,
+  Zap,
+} from "lucide-react";
+
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import ProfileCard from "./components/ProfileCard";
 
@@ -7,601 +52,1060 @@ export default function Home() {
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/profiles/")
-      .then((res) => res.json())
-      .then((data) => setProfiles(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Backend is not responding");
+        }
+        return res.json();
+      })
+      .then((data) => setProfiles(data))
+      .catch((error) => {
+        console.error(
+          "Could not fetch profiles. Is the backend running?",
+          error,
+        );
+        setProfiles([]);
+      });
   }, []);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 selection:bg-blue-200">
       {/* ================= HERO SECTION ================= */}
-      <section className="relative bg-white pt-24 pb-20 px-6 text-center overflow-hidden border-b border-slate-100">
+      <section
+        id="home"
+        className="relative bg-white pt-8 pb-16 px-6 text-center overflow-hidden border-b border-slate-100"
+      >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent)] pointer-events-none" />
 
-        <div className="inline-flex items-center gap-2 px-4 py-2 mb-8 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-full shadow-sm">
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-            />
-          </svg>
-          Scientific • Personalized • Reliable
+        <div className="inline-flex items-center gap-3 px-6 py-3 mb-8 text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-full shadow-sm mt-4">
+          <Microscope className="w-4 h-4" /> Scientific
+          <span className="text-blue-300">•</span>
+          <Activity className="w-4 h-4" /> Personalized
+          <span className="text-blue-300">•</span>
+          <ShieldCheck className="w-4 h-4" /> Reliable
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-6 tracking-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 max-w-5xl mx-auto leading-[1.2] font-serif">
           Not Just for You. <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+          <span className="font-serif italic font-normal text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mt-4 inline-block tracking-wide">
             For Your Loved Ones Too.
           </span>
         </h1>
 
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 leading-relaxed mb-10">
+        <p className="max-w-3xl mx-auto text-base md:text-lg text-slate-600 font-sans font-medium leading-relaxed mb-12">
           At Diagnostic Kart, care goes beyond humans. We provide advanced
-          diagnostics for you and your beloved pets—because every life
-          matters[cite: 12].
+          diagnostics for you and your beloved pets—because every life matters.
         </p>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all hover:-translate-y-1">
-            Book Your Test
+        <div className="flex flex-col sm:flex-row justify-center gap-6">
+          <button className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all hover:-translate-y-1 text-lg">
+            Book Your Test <ArrowRight className="w-5 h-5" />
           </button>
-          <button className="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-300 transition-all hover:-translate-y-1">
-            Explore Health Profiles
+          <button className="flex items-center justify-center gap-2 bg-white border-2 border-slate-200 text-slate-800 px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-300 hover:bg-slate-50 transition-all hover:-translate-y-1 text-lg">
+            Explore Health Profiles <Activity className="w-5 h-5" />
           </button>
         </div>
       </section>
 
-      {/* ================= WHO WE ARE ================= */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <div className="flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Who We Are
-            </div>
-            <h2 className="text-4xl font-extrabold text-slate-900 mb-6 leading-tight">
-              Diagnostics Designed Around You
-            </h2>
-            <p className="text-slate-600 text-lg mb-4 leading-relaxed">
-              Health is not the same for everyone. Your lifestyle, habits,
-              environment, and goals make your body unique. So why should your
-              lab tests be the same?[cite: 12]
-            </p>
-            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-              At Diagnostic Kart, we move beyond traditional testing. We create
-              smart, personalized diagnostic profiles based on:
-            </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                "Lifestyle & daily habits",
-                "Fitness & health goals",
-                "Risk factors & medical history",
-                "Scientific data & clinical insights",
-              ].map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100 shadow-sm"
-                >
-                  <svg
-                    className="w-6 h-6 text-blue-500 shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="text-slate-700 font-semibold text-sm">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* ================= ABOUT US (WHO WE ARE & DIFFERENCE) ================= */}
+      <section
+        id="about"
+        className="relative py-20 px-6 bg-slate-50 overflow-hidden"
+      >
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-400/10 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none" />
 
-          {/* Visual abstract representation instead of an image */}
-          <div className="relative h-full min-h-[400px] rounded-[2rem] bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 p-8 overflow-hidden flex items-center justify-center shadow-inner">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-30" />
-            <div className="relative z-10 bg-white/60 backdrop-blur-xl border border-white p-8 rounded-3xl shadow-xl text-center">
-              <h3 className="text-2xl font-black text-slate-900 mb-4">
-                Our Philosophy
-              </h3>
-              <p className="text-slate-600 font-medium mb-6">
-                One test does not fit all. One body does not follow standard
-                rules. That’s why we believe:
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-stretch">
+            {/* LEFT SIDE: Who We Are */}
+            <div className="flex flex-col justify-center pr-0 lg:pr-12">
+              <div className="inline-flex items-center gap-2 mb-6 text-blue-600 font-bold uppercase tracking-widest text-sm bg-blue-100/50 px-4 py-2 rounded-full w-max">
+                <Info className="w-4 h-4" /> Who We Are
+              </div>
+
+              <h2 className="text-4xl font-bold text-slate-900 mb-6 tracking-tight leading-tight font-serif">
+                Diagnostics Designed <br />
+                <span className="text-blue-600 font-serif">Around You.</span>
+              </h2>
+
+              <p className="text-slate-600 text-lg mb-8 leading-relaxed font-medium">
+                Health is not the same for everyone. Your lifestyle, habits,
+                environment, and goals make your body unique. So why should your
+                lab tests be the same? We create smart, personalized profiles
+                based on:
               </p>
-              <div className="bg-blue-600 text-white p-6 rounded-2xl font-bold text-lg italic shadow-lg shadow-blue-200">
-                "Your health profile should be as unique as you are."[cite: 12]
+
+              {/* REMOVED mt-auto to fix the massive gap! Replaced with mt-4 */}
+              <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                {[
+                  {
+                    text: "Lifestyle & Habits",
+                    icon: <HeartPulse className="w-6 h-6 text-blue-600" />,
+                  },
+                  {
+                    text: "Fitness Goals",
+                    icon: <Dumbbell className="w-6 h-6 text-blue-600" />,
+                  },
+                  {
+                    text: "Medical History",
+                    icon: <ClipboardList className="w-6 h-6 text-blue-600" />,
+                  },
+                  {
+                    text: "Clinical Insights",
+                    icon: <Dna className="w-6 h-6 text-blue-600" />,
+                  },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="group flex items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 cursor-default"
+                  >
+                    <div className="p-3 bg-blue-50 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                      <div className="text-current">{item.icon}</div>
+                    </div>
+                    <span className="text-slate-800 font-bold text-lg group-hover:text-blue-700 transition-colors">
+                      {item.text}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
+
+            {/* RIGHT SIDE: What Makes Us Different */}
+            <div className="relative bg-slate-900 text-white rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden border border-slate-800 flex flex-col h-full">
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full mix-blend-screen filter blur-[80px] opacity-30 pointer-events-none" />
+
+              <div className="inline-flex items-center gap-2 mb-6 text-indigo-400 font-bold uppercase tracking-widest text-sm relative z-10">
+                <Sparkles className="w-5 h-5" /> The Difference
+              </div>
+
+              <h2 className="text-4xl font-bold mb-8 tracking-tight leading-tight relative z-10 font-serif">
+                Not Traditional. <br />
+                <span className="text-slate-400 font-serif">
+                  Not Generic.
+                </span>{" "}
+                <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400 font-serif">
+                  Truly Personalized.
+                </span>
+              </h2>
+
+              <ul className="space-y-6 mb-12 relative z-10 flex-grow">
+                {[
+                  {
+                    text: "No unnecessary tests",
+                    desc: "You only pay for what your body actually needs.",
+                  },
+                  {
+                    text: "No generic packages",
+                    desc: "Built from the ground up for your specific biology.",
+                  },
+                  {
+                    text: "Science-based diagnostics",
+                    desc: "Backed by rigorous medical research and data.",
+                  },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 group">
+                    <div className="shrink-0 mt-1 p-1 bg-indigo-500/20 rounded-full group-hover:bg-indigo-500/40 transition-colors">
+                      <CheckCircle2 className="w-6 h-6 text-indigo-400" />
+                    </div>
+                    <div>
+                      <span className="block text-slate-100 font-bold text-xl mb-1">
+                        {item.text}
+                      </span>
+                      <span className="block text-slate-400 font-medium">
+                        {item.desc}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= WHAT MAKES US DIFFERENT ================= */}
-      <section className="bg-slate-900 py-24 px-6 text-white relative overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-50" />
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 mb-4 text-blue-400 font-bold uppercase tracking-widest text-sm">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-            What Makes Us Different
-          </div>
-          <h2 className="text-4xl font-extrabold mb-6">
-            Not Traditional. Not Generic. Truly Personalized.
-          </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto mb-16 text-lg">
-            Most labs offer fixed test packages. We don’t. We design customized
-            health profiles that actually make sense for you[cite: 12].
-          </p>
+      {/* ================= OUR SERVICES (ANIMATED) ================= */}
+      <section
+        id="services"
+        className="relative py-20 px-6 bg-slate-50 overflow-hidden border-t border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
+              <Activity className="w-5 h-5" /> Comprehensive Care
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight">
+              Our Services
+            </h2>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="space-y-12">
+            {/* 1. HUMAN DIAGNOSTICS */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative bg-gradient-to-br from-white via-blue-50/50 to-indigo-50 border border-blue-100 rounded-[2.5rem] p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] overflow-hidden group"
+            >
+              <div className="absolute -right-24 top-1/2 -translate-y-1/2 text-blue-200/40 pointer-events-none z-0 transform group-hover:scale-110 transition-transform duration-1000">
+                <User size={500} strokeWidth={0.5} />
+              </div>
+
+              <div className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+                <div className="lg:w-1/3">
+                  <div className="p-4 bg-blue-600 text-white rounded-3xl w-max mb-6 shadow-lg shadow-blue-200">
+                    <User className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-4xl font-bold text-slate-900 font-serif mb-4 leading-tight">
+                    Human <br /> Diagnostics
+                  </h3>
+                  <p className="text-slate-600 text-lg font-medium">
+                    Advanced, highly personalized panels designed around your
+                    unique biology and lifestyle goals.
+                  </p>
+                </div>
+
+                <div className="lg:w-2/3 w-full">
+                  <ul className="grid sm:grid-cols-2 gap-4">
+                    {[
+                      {
+                        text: "Preventive health checkups",
+                        icon: <ShieldCheck className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Lifestyle-based health profiles",
+                        icon: <Activity className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Fitness & performance panels",
+                        icon: <Dumbbell className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Hormonal & metabolic testing",
+                        icon: <Beaker className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Advanced organ function analysis",
+                        icon: <Heart className="w-6 h-6" />,
+                      },
+                    ].map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-4 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-white shadow-sm hover:border-blue-300 hover:shadow-md transition-all cursor-default group/item"
+                      >
+                        <div className="text-blue-500 shrink-0 group-hover/item:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                        <span className="text-slate-800 font-bold text-lg">
+                          {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 2. PET DIAGNOSTICS */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-[2.5rem] p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden group text-white"
+            >
+              <div className="absolute -left-20 top-1/2 -translate-y-1/2 text-slate-600/20 pointer-events-none z-0 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-1000">
+                <PawPrint size={500} strokeWidth={0.5} />
+              </div>
+
+              <div className="relative z-10 flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center">
+                <div className="lg:w-1/3">
+                  <div className="p-4 bg-amber-500 text-slate-900 rounded-3xl w-max mb-6 shadow-lg shadow-amber-500/20">
+                    <PawPrint className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-4xl font-bold text-white font-serif mb-4 leading-tight">
+                    Pet <br /> Diagnostics
+                  </h3>
+                  <div className="bg-slate-800/80 border-l-4 border-amber-500 p-5 rounded-r-2xl mt-6 backdrop-blur-sm">
+                    <p className="text-amber-50 font-serif italic text-lg leading-snug">
+                      Because your pets deserve the{" "}
+                      <span className="text-amber-400 font-bold not-italic">
+                        same level of care
+                      </span>{" "}
+                      as you.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:w-2/3 w-full">
+                  <ul className="grid sm:grid-cols-2 gap-4">
+                    {[
+                      {
+                        text: "Health screening for dogs & cats",
+                        icon: <Stethoscope className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Preventive wellness panels",
+                        icon: <ShieldCheck className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Infection & disease detection",
+                        icon: <Microscope className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Nutrition & deficiency analysis",
+                        icon: <HeartPulse className="w-6 h-6" />,
+                      },
+                    ].map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-4 bg-slate-800/60 backdrop-blur-md p-4 rounded-2xl border border-slate-700 hover:border-amber-500/50 hover:bg-slate-800 transition-all cursor-default group/item"
+                      >
+                        <div className="text-amber-500 shrink-0 group-hover/item:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                        <span className="text-slate-200 font-bold text-lg">
+                          {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Header (Animated to slide up) */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
+              <Settings className="w-5 h-5" /> The Process
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight mb-6">
+              Simple. Smart. Scientific.
+            </h2>
+            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
+              We’ve removed the guesswork from healthcare. Getting the right
+              tests is now as easy as 1-2-3-4.
+            </p>
+          </motion.div>
+
+          {/* Steps Timeline Grid */}
+          <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+            {/* Horizontal Connecting Line (Visible only on large screens) */}
+            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-100 via-indigo-200 to-blue-100 z-0"></div>
+
             {[
               {
-                title: "No Unnecessary Tests",
-                icon: "M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z",
+                num: "1",
+                title: "Answer a few questions",
+                desc: "We understand your lifestyle, habits & health goals.",
+                icon: <ClipboardList className="w-8 h-8" />,
+                delay: 0.1,
               },
               {
-                title: "No Generic Packages",
-                icon: "M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10",
+                num: "2",
+                title: "Get a personalized profile",
+                desc: "AI + medical expertise designs your test plan.",
+                icon: <Brain className="w-8 h-8" />,
+                delay: 0.3,
               },
               {
-                title: "Science-Based Diagnostics",
-                icon: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z",
+                num: "3",
+                title: "Sample collection & testing",
+                desc: "Safe, accurate, and incredibly convenient.",
+                icon: <TestTubes className="w-8 h-8" />,
+                delay: 0.5,
               },
-            ].map((feature, i) => (
-              <div
+              {
+                num: "4",
+                title: "Smart reports & insights",
+                desc: "Actionable results—not just confusing numbers.",
+                icon: <LineChart className="w-8 h-8" />,
+                delay: 0.7,
+              },
+            ].map((step, i) => (
+              <motion.div
                 key={i}
-                className="bg-slate-800/50 backdrop-blur-xl p-8 rounded-3xl border border-slate-700 flex flex-col items-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{
+                  duration: 0.6,
+                  delay: step.delay,
+                  ease: "easeOut",
+                }}
+                className="relative z-10 flex flex-col items-center text-center group"
               >
-                <div className="w-16 h-16 bg-blue-500/20 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
-                  <svg
-                    className="w-8 h-8"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d={feature.icon}
-                    />
-                  </svg>
+                {/* Icon Container with Hover Animation */}
+                <div className="w-24 h-24 bg-white border-4 border-slate-50 shadow-xl rounded-full flex items-center justify-center text-blue-600 mb-8 relative group-hover:border-blue-100 group-hover:shadow-blue-200 group-hover:-translate-y-2 transition-all duration-300">
+                  {/* Floating Number Badge */}
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                    {step.num}
+                  </div>
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    {step.icon}
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold">{feature.title}</h3>
-              </div>
+
+                <h3 className="text-2xl font-bold text-slate-900 mb-3 font-serif">
+                  {step.title}
+                </h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  {step.desc}
+                </p>
+              </motion.div>
             ))}
           </div>
-          <p className="mt-12 text-blue-400 font-bold uppercase tracking-widest text-sm bg-blue-900/30 inline-block px-6 py-2 rounded-full border border-blue-500/30">
-            👉 Because accurate insights come from relevant testing[cite: 12]
-          </p>
         </div>
       </section>
 
-      {/* ================= OUR SERVICES ================= */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-extrabold text-center text-slate-900 mb-16">
-          Our Services
-        </h2>
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* Human Diagnostics Card */}
-          <div className="bg-white border border-slate-200 p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-shadow">
-            <div className="flex items-center gap-5 mb-8 border-b border-slate-100 pb-6">
-              <div className="p-4 bg-blue-50 text-blue-600 rounded-2xl">
-                <svg
-                  className="w-8 h-8"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-3xl font-bold text-slate-900">
-                Human Diagnostics
-              </h3>
-            </div>
-            <ul className="space-y-5">
-              {[
-                "Preventive health checkups",
-                "Lifestyle-based health profiles",
-                "Fitness & performance panels",
-                "Hormonal & metabolic testing",
-                "Advanced organ function analysis",
-              ].map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-4 text-slate-700 font-medium text-lg"
-                >
-                  <div className="w-2 h-2 rounded-full bg-blue-500" /> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* ================= SCIENCE BEHIND OUR APPROACH ================= */}
+      <section
+        id="science"
+        className="relative py-24 px-6 bg-slate-900 text-white overflow-hidden"
+      >
+        {/* Abstract Data Background */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
 
-          {/* Pet Diagnostics Card */}
-          <div className="bg-white border border-slate-200 p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl transition-shadow">
-            <div className="flex items-center gap-5 mb-8 border-b border-slate-100 pb-6">
-              <div className="p-4 bg-orange-50 text-orange-500 rounded-2xl">
-                {/* Pet Paw Icon */}
-                <svg
-                  className="w-8 h-8"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 12.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zM7.5 11a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM16.5 11a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM9 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5zM15 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" />
-                </svg>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* LEFT: Heading & Taglines */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col justify-center"
+            >
+              <div className="inline-flex items-center gap-2 mb-6 text-blue-400 font-bold uppercase tracking-widest text-sm bg-blue-900/30 border border-blue-500/30 px-4 py-2 rounded-full w-max">
+                <Dna className="w-4 h-4" /> The Formula
               </div>
-              <h3 className="text-3xl font-bold text-slate-900">
-                Pet Diagnostics
-              </h3>
-            </div>
-            <ul className="space-y-5 mb-10">
-              {[
-                "Health screening for dogs & cats",
-                "Preventive wellness panels",
-                "Infection & disease detection",
-                "Nutrition & deficiency analysis",
-              ].map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-4 text-slate-700 font-medium text-lg"
-                >
-                  <div className="w-2 h-2 rounded-full bg-orange-500" /> {item}
-                </li>
-              ))}
-            </ul>
-            <div className="bg-orange-50 text-orange-700 p-4 rounded-xl font-bold text-sm text-center">
-              👉 Because your pets deserve the same level of care as you[cite:
-              12]
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ================= DYNAMIC PRODUCT GRID (E-Commerce) ================= */}
-      <section className="bg-slate-100/50 py-24 px-6 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-4">
-            <div>
-              <h2 className="text-4xl font-extrabold text-slate-900 mb-3">
-                Book a Test Now
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-10 tracking-tight leading-tight font-serif">
+                The Science Behind <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 font-serif">
+                  Our Approach.
+                </span>
               </h2>
-              <p className="text-slate-500 text-lg">
-                Explore our scientifically backed, dynamic health profiles.
+
+              <div className="space-y-6">
+                {/* Tagline 1 */}
+                <div className="flex items-start gap-4 p-6 rounded-2xl bg-slate-800/50 border border-slate-700 backdrop-blur-sm group hover:border-blue-500/50 transition-colors">
+                  <div className="p-3 bg-blue-500/20 text-blue-400 rounded-xl shrink-0 group-hover:rotate-180 transition-transform duration-700">
+                    <RefreshCcw className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-100 mb-1">
+                      Health is dynamic, not static.
+                    </h4>
+                    <p className="text-slate-400 font-medium">
+                      Your body changes. Your lifestyle changes. Your
+                      diagnostics should be able to keep up.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Tagline 2 */}
+                <div className="flex items-start gap-4 p-6 rounded-2xl bg-slate-800/50 border border-slate-700 backdrop-blur-sm group hover:border-indigo-500/50 transition-colors">
+                  <div className="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <Crosshair className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-bold text-slate-100 mb-1">
+                      Testing should adapt to you.
+                    </h4>
+                    <p className="text-slate-400 font-medium">
+                      Not the other way around. We map the right tests to your
+                      unique biological footprint.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT: The 3 Scientific Pillars (Cascading Cards) */}
+            <div className="relative h-full min-h-[400px] flex flex-col justify-center gap-6 lg:pl-10">
+              <h3 className="text-2xl font-serif font-bold text-slate-300 mb-2">
+                We combine:
+              </h3>
+
+              {[
+                {
+                  title: "Clinical Diagnostics",
+                  desc: "Gold-standard medical laboratory testing.",
+                  icon: <Microscope className="w-8 h-8" />,
+                  color: "from-blue-500 to-blue-600",
+                  delay: 0.2,
+                },
+                {
+                  title: "Lifestyle Medicine",
+                  desc: "Correlating habits, diet, and stress to your health.",
+                  icon: <HeartPulse className="w-8 h-8" />,
+                  color: "from-indigo-500 to-indigo-600",
+                  delay: 0.4,
+                },
+                {
+                  title: "Data-Driven Insights",
+                  desc: "Advanced algorithms to identify precise patterns.",
+                  icon: <LineChart className="w-8 h-8" />,
+                  color: "from-violet-500 to-violet-600",
+                  delay: 0.6,
+                },
+              ].map((pillar, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: false, amount: 0.2 }}
+                  transition={{ duration: 0.6, delay: pillar.delay }}
+                  className="flex items-center gap-6 bg-slate-800/80 border border-slate-700 p-6 rounded-3xl shadow-xl hover:-translate-y-1 transition-transform cursor-default"
+                >
+                  <div
+                    className={`p-4 rounded-2xl bg-gradient-to-br ${pillar.color} text-white shadow-lg`}
+                  >
+                    {pillar.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-2xl font-bold text-white font-serif tracking-wide">
+                      {pillar.title}
+                    </h4>
+                    <p className="text-slate-400 font-medium mt-1">
+                      {pillar.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= WHY CHOOSE US ================= */}
+      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
+        {/* Very subtle background styling */}
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.05),transparent_50%)] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            {/* LEFT: Heading Area */}
+            <div className="lg:w-5/12">
+              <div className="inline-flex items-center gap-2 mb-6 text-blue-600 font-bold uppercase tracking-widest text-sm bg-blue-50 px-4 py-2 rounded-full w-max">
+                <Heart className="w-4 h-4 fill-blue-600" /> The Right Choice
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight mb-8 leading-tight">
+                Why Choose <br />
+                <span className="text-blue-600">Diagnostic Kart?</span>
+              </h2>
+              <p className="text-xl text-slate-500 font-medium leading-relaxed">
+                We don’t just process samples; we decode your health. Experience
+                a platform where advanced science meets genuine care for your
+                entire family.
               </p>
             </div>
-            <button className="text-blue-600 font-bold hover:text-blue-800 flex items-center gap-2">
-              View All Profiles{" "}
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </button>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {profiles.length > 0 ? (
-              profiles.map((p: any) => <ProfileCard key={p.id} profile={p} />)
-            ) : (
-              <div className="col-span-full py-20 text-center border-2 border-dashed border-slate-300 rounded-3xl">
-                <p className="text-slate-500 text-lg">
-                  No health profiles loaded yet. Please use the dashboard to
-                  upload the Excel file.
-                </p>
-              </div>
-            )}
+            {/* RIGHT: High-End Feature Strips */}
+            <div className="lg:w-7/12 w-full flex flex-col gap-4">
+              {[
+                {
+                  text: "Personalized testing approach",
+                  icon: <Fingerprint className="w-7 h-7" />,
+                  delay: 0.1,
+                },
+                {
+                  text: "Scientific & data-backed profiles",
+                  icon: <Database className="w-7 h-7" />,
+                  delay: 0.2,
+                },
+                {
+                  text: "Human + pet diagnostics in one platform",
+                  icon: <HeartHandshake className="w-7 h-7" />,
+                  delay: 0.3,
+                },
+                {
+                  text: "Accurate, quality-controlled reports",
+                  icon: <FileCheck className="w-7 h-7" />,
+                  delay: 0.4,
+                },
+                {
+                  text: "Focus on prevention, not just detection",
+                  icon: <ShieldPlus className="w-7 h-7" />,
+                  delay: 0.5,
+                },
+              ].map((feature, i) => (
+                <div
+                  key={i}
+                  className="group flex items-center gap-6 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 cursor-default"
+                >
+                  <div className="p-4 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-inner">
+                    {feature.icon}
+                  </div>
+                  <h4 className="text-xl font-bold text-slate-800 group-hover:text-blue-900 transition-colors">
+                    {feature.text}
+                  </h4>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ================= HOW IT WORKS & SCIENCE ================= */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
-        <h2 className="text-4xl font-extrabold text-center text-slate-900 mb-16">
-          How It Works: Simple. Smart. Scientific.
-        </h2>
+      {/* ================= OUR PHILOSOPHY (Redesigned) ================= */}
+      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
+        {/* Soft, airy background glows that extend to the edges */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
-          {[
-            {
-              num: "1",
-              title: "Answer a few questions",
-              desc: "We understand your lifestyle, habits & health goals",
-            },
-            {
-              num: "2",
-              title: "Get a personalized profile",
-              desc: "AI + medical expertise designs your test plan",
-            },
-            {
-              num: "3",
-              title: "Sample collection",
-              desc: "Safe, accurate, and convenient testing",
-            },
-            {
-              num: "4",
-              title: "Smart reports & insights",
-              desc: "Actionable results—not just numbers",
-            },
-          ].map((step, i) => (
-            <div key={i} className="text-center relative group">
-              <div className="w-20 h-20 mx-auto bg-white border-4 border-slate-100 text-blue-600 rounded-full flex items-center justify-center text-3xl font-black mb-6 shadow-xl group-hover:border-blue-500 transition-colors z-10 relative">
-                {step.num}
-              </div>
-              <h4 className="font-bold text-xl text-slate-900 mb-3">
-                {step.title}
-              </h4>
-              <p className="text-base text-slate-500">{step.desc}[cite: 12]</p>
-            </div>
-          ))}
-        </div>
+        <div className="max-w-6xl mx-auto relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Quote className="w-16 h-16 text-blue-100 mx-auto mb-8 transform -scale-x-100" />
 
-        {/* Science Behind Our Approach */}
-        <div className="bg-white border border-slate-200 shadow-2xl rounded-[3rem] p-12 flex flex-col lg:flex-row items-center gap-12 overflow-hidden relative">
-          <div className="absolute -left-10 -bottom-10 w-64 h-64 bg-blue-50 rounded-full blur-3xl -z-10" />
-
-          <div className="lg:w-1/2">
-            <h3 className="text-3xl font-bold text-slate-900 mb-6">
-              Science Behind Our Approach
+            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-[0.3em] mb-8">
+              Our Philosophy
             </h3>
-            <p className="text-slate-600 text-lg mb-6 leading-relaxed">
-              We combine <strong>Clinical diagnostics</strong>,{" "}
-              <strong>Lifestyle medicine</strong>, and{" "}
-              <strong>Data-driven insights</strong>.
+
+            <div className="text-3xl md:text-5xl font-serif text-slate-800 leading-relaxed mb-10 max-w-4xl mx-auto font-bold">
+              <span className="block mb-2">One test does not fit all.</span>
+              <span className="block text-slate-400">
+                One body does not follow standard rules.
+              </span>
+            </div>
+
+            <p className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6">
+              That's why we believe:
             </p>
-            <div className="space-y-4 mb-8">
-              <div className="flex gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100 text-blue-800 font-medium">
-                <span className="text-xl">👉</span> Health is dynamic, not
-                static.
-              </div>
-              <div className="flex gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100 text-blue-800 font-medium">
-                <span className="text-xl">👉</span> Testing should adapt to
-                you—not the other way around.
-              </div>
-            </div>
-          </div>
 
-          <div className="lg:w-1/2 bg-slate-900 p-10 rounded-3xl text-white shadow-inner w-full">
-            <h4 className="font-bold text-2xl mb-8 flex items-center gap-3">
-              <svg
-                className="w-8 h-8 text-red-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              Why Choose Diagnostic Kart
-            </h4>
-            <ul className="space-y-5 text-lg text-slate-300">
-              <li className="flex items-center gap-3">
-                <span className="text-green-400 font-bold">✔</span> Personalized
-                testing approach
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-green-400 font-bold">✔</span> Scientific &
-                data-backed profiles
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-green-400 font-bold">✔</span> Human + pet
-                diagnostics in one platform
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-green-400 font-bold">✔</span> Accurate,
-                quality-controlled reports
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="text-green-400 font-bold">✔</span> Focus on
-                prevention, not just detection[cite: 12]
-              </li>
-            </ul>
-          </div>
+            {/* Utilizing the cursive font for a highly personalized, elegant quote */}
+            <h2 className="text-4xl md:text-5xl font-cursive text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 py-4 leading-tight">
+              "Your health profile should be as unique as you are."
+            </h2>
+          </motion.div>
         </div>
       </section>
 
-      {/* ================= OUR SCIENTIFIC BOARD ================= */}
-      <section className="bg-slate-50 border-t border-slate-200 py-24 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-1/2">
-            <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-2">
-              Our Scientific Board
+      {/* ================= CALL TO ACTION (Moved to Page) ================= */}
+      <section className="relative py-16 px-6 bg-slate-900 text-white overflow-hidden">
+        {/* Sleek, professional dark background to anchor the bottom of the page */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(59,130,246,0.15),transparent_70%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-slate-700 to-transparent opacity-50" />
+
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="inline-flex items-center gap-2 mb-6 text-indigo-400 font-bold uppercase tracking-widest text-sm bg-indigo-500/10 px-5 py-2.5 rounded-full border border-indigo-500/20">
+              <Sparkles className="w-4 h-4" /> The Next Step
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 font-serif leading-tight">
+              Start Your Health <br className="hidden md:block" /> Journey
+              Today.
             </h2>
-            <h3 className="text-4xl font-extrabold text-slate-900 mb-6">
-              The Roots of Everything We Do
-            </h3>
-            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+
+            <p className="text-xl md:text-xl text-slate-400 mb-12 font-medium max-w-2xl mx-auto">
+              Whether for you or your pet, get diagnostics that truly understand
+              your needs.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <button className="flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg group">
+                <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                Create Personalized Profile
+              </button>
+              <button className="flex items-center justify-center gap-3 bg-transparent border border-slate-600 text-slate-300 px-8 py-4 rounded-full font-bold hover:bg-slate-800 hover:text-white transition-all hover:-translate-y-1 text-lg group">
+                Book a Test Now
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= SCIENTIFIC BOARD ================= */}
+      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
+        {/* Soft Ambient Background Glows */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-slate-100 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* TOP: Centered Header Area */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <div className="inline-flex items-center gap-2 mb-6 text-blue-600 font-bold uppercase tracking-widest text-sm bg-blue-50 px-4 py-2 rounded-full shadow-sm border border-blue-100/50">
+              <Microscope className="w-4 h-4" /> Our Scientific Board
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight mb-6 leading-tight">
+              Guided by{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                Experts.
+              </span>
+            </h2>
+
+            <p className="text-lg text-slate-600 leading-relaxed font-medium">
               At Diagnostic Kart, every test and profile is guided by our
               Scientific Board. They are a team of medical experts, researchers,
               and specialists who ensure that:
             </p>
-            <ul className="space-y-4 mb-10">
-              <li className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                  1
-                </span>
-                <span className="font-semibold text-slate-800">
-                  Every test is scientifically valid
-                </span>
-              </li>
-              <li className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                  2
-                </span>
-                <span className="font-semibold text-slate-800">
-                  Every profile is logically designed
-                </span>
-              </li>
-              <li className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-                <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
-                  3
-                </span>
-                <span className="font-semibold text-slate-800">
-                  Every recommendation is medically meaningful[cite: 12]
-                </span>
-              </li>
-            </ul>
-            <blockquote className="border-l-4 border-blue-600 pl-6 text-xl italic text-slate-700 font-serif">
-              "Strong roots create a healthy tree. At Diagnostic Kart, our roots
-              are science."
-            </blockquote>
-          </div>
+          </motion.div>
 
-          <div className="lg:w-1/2 relative">
-            {/* IMAGE RENDERED HERE - Ensure scientific-board.png is in public/images/ */}
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white bg-white">
-              <img
-                src="/images/scientific-board.png"
-                alt="Our Scientific Board Tree"
-                className="w-full h-auto object-cover"
-              />
-            </div>
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+            {/* LEFT: Image & Quote Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="lg:w-1/2 w-full"
+            >
+              <div className="bg-slate-50 border border-slate-200 p-3 rounded-[2.5rem] shadow-xl flex flex-col gap-3 group">
+                {/* Image Container - Using w-full, h-auto, and object-contain stops the zoom/cropping */}
+                <div className="rounded-[2rem] overflow-hidden bg-white w-full flex items-center justify-center border border-slate-100">
+                  <Image
+                    src="/images/scientific-board.png"
+                    alt="Scientific Board"
+                    width={800}
+                    height={600}
+                    className="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-1000"
+                  />
+                </div>
+
+                {/* The Quote sitting neatly below the image */}
+                <div className="bg-slate-900 text-white p-6 md:p-8 rounded-[2rem] shadow-inner text-center md:text-left">
+                  <p className="font-serif italic text-xl md:text-xl text-blue-50">
+                    "Health is not random. <br className="hidden lg:block" />
+                    <span className="text-white font-bold not-italic">
+                      It is based on science.
+                    </span>
+                    "
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT: Checklist & Why It Matters */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="lg:w-1/2 w-full flex flex-col gap-8"
+            >
+              {/* Checklist */}
+              <ul className="space-y-4">
+                {[
+                  { text: "Every test is scientifically valid" },
+                  { text: "Every profile is logically designed" },
+                  { text: "Every recommendation is medically meaningful" },
+                ].map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 hover:-translate-y-0.5 transition-all cursor-default"
+                  >
+                    <div className="text-blue-600 bg-blue-50 p-2.5 rounded-xl shrink-0">
+                      <CheckCircle2 className="w-6 h-6" />
+                    </div>
+                    <span className="text-slate-800 font-bold text-lg">
+                      {item.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Dark "Why It Matters" Accent Box */}
+              <div className="bg-slate-900 rounded-3xl p-8 relative overflow-hidden text-white shadow-xl mt-auto">
+                {/* Internal Glow Effect */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full mix-blend-screen filter blur-[60px] opacity-20 pointer-events-none" />
+
+                <h3 className="text-xl font-bold font-serif mb-4 text-indigo-300 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5" /> Why It Matters
+                </h3>
+                <p className="text-slate-300 mb-6 font-medium leading-relaxed">
+                  Our Scientific Board acts as the foundation behind everything
+                  we do—from creating personalized profiles to selecting the
+                  right tests for you.
+                </p>
+
+                <div className="bg-slate-800/50 border border-slate-700 p-5 rounded-2xl backdrop-blur-sm flex items-start gap-4">
+                  <Info className="w-6 h-6 text-indigo-400 shrink-0 mt-0.5" />
+                  <p className="text-slate-100 font-medium text-lg leading-snug">
+                    They make sure your reports are not just numbers, but{" "}
+                    <span className="text-white font-bold bg-indigo-500/20 px-2 py-0.5 rounded ml-1 border border-indigo-500/30 shadow-inner block mt-2 md:inline md:mt-0">
+                      accurate health insights.
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ================= COMING SOON: DIKO AI ================= */}
-      <section className="bg-slate-900 py-24 px-6 text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay" />
+      {/* ================= COMING SOON: AI HEALTH ASSISTANT ================= */}
+      <section
+        id="ai"
+        className="relative py-16 px-6 bg-slate-950 text-white overflow-hidden border-b border-slate-900"
+      >
+        {/* Futuristic AI Glowing Backgrounds */}
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/20 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 relative z-10">
-          <div className="lg:w-1/2 relative order-2 lg:order-1">
-            {/* IMAGE RENDERED HERE - Ensure diko-ai.png is in public/images/ */}
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-900/50 border-4 border-slate-800 bg-slate-800">
-              <img
-                src="/images/diko-ai.png"
-                alt="DIKO AI Health Assistant"
-                className="w-full h-auto object-cover"
-              />
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* ROW 1: Intro & AI Image */}
+          <div className="flex flex-col lg:flex-row gap-16 items-center mb-12">
+            {/* Left: Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="lg:w-1/2"
+            >
+              <div className="inline-flex items-center gap-2 mb-6 text-indigo-300 font-bold uppercase tracking-widest text-sm bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-full w-max shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                <Zap className="w-4 h-4 text-indigo-400" /> Coming Soon
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 font-serif leading-tight">
+                Smart Chat. <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">
+                  Smarter Health.
+                </span>
+              </h2>
+
+              <p className="text-xl text-slate-300 font-medium leading-relaxed mb-8">
+                Meet your AI Health Assistant. Coming soon at Diagnostic Kart —
+                a smart chatbot that understands you, your lifestyle, and your
+                health needs.{" "}
+                <span className="text-white font-bold">
+                  No more guessing which tests to take.
+                </span>
+              </p>
+
+              <div className="flex flex-col gap-4 bg-slate-900/50 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
+                <div className="flex items-center gap-4 text-indigo-200 font-medium text-lg">
+                  <div className="p-2 bg-indigo-500/20 rounded-lg">
+                    <MessageSquare className="w-5 h-5 text-indigo-400" />
+                  </div>
+                  Just answer a few simple questions...
+                </div>
+                <div className="flex items-center gap-4 text-cyan-200 font-medium text-lg">
+                  <div className="p-2 bg-cyan-500/20 rounded-lg">
+                    <Sparkles className="w-5 h-5 text-cyan-400" />
+                  </div>
+                  Get a personalized health profile instantly.
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right: AI Visual / Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7 }}
+              className="lg:w-1/2 w-full flex justify-center"
+            >
+              <div className="relative w-full max-w-md">
+                {/* Glowing aura behind the image - changed to rounded-3xl */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600 to-cyan-500 rounded-3xl blur-2xl opacity-20 animate-pulse" />
+
+                {/* Changed from rounded-full to rounded-3xl, and removed aspect-square */}
+                <div className="relative w-full bg-slate-900 border border-slate-700/50 rounded-3xl shadow-2xl p-8 backdrop-blur-xl flex items-center justify-center overflow-hidden group">
+                  <Image
+                    src="/images/diko-ai.png"
+                    alt="Diko AI Assistant"
+                    width={500}
+                    height={500}
+                    className="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-700 z-10"
+                  />
+                  {/* Decorative AI scanning line */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-cyan-400/50 shadow-[0_0_20px_rgba(34,211,238,0.8)] z-20 animate-[scan_3s_ease-in-out_infinite]" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ROW 2: How It Works (5 Step Process) */}
+          <div className="mb-12">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-serif font-bold text-white mb-2 flex items-center justify-center gap-3">
+                <BrainCircuit className="w-8 h-8 text-indigo-400" /> How It
+                Works
+              </h3>
+              <p className="text-slate-400 font-medium">
+                Simple, seamless, and deeply intelligent.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {[
+                {
+                  step: "01",
+                  title: "Chat with AI",
+                  desc: "Answer easy questions about your lifestyle, diet, sleep & habits.",
+                  icon: <Bot className="w-6 h-6" />,
+                },
+                {
+                  step: "02",
+                  title: "Smart Analysis",
+                  desc: "Our AI studies your inputs using medical & scientific logic.",
+                  icon: <Brain className="w-6 h-6" />,
+                },
+                {
+                  step: "03",
+                  title: "Custom Profile",
+                  desc: "You get a health profile designed specifically and only for you.",
+                  icon: <Fingerprint className="w-6 h-6" />,
+                },
+                {
+                  step: "04",
+                  title: "Right Tests",
+                  desc: "No unnecessary tests—only what your body actually needs.",
+                  icon: <ListChecks className="w-6 h-6" />,
+                },
+                {
+                  step: "05",
+                  title: "Clear Insights",
+                  desc: "Actionable guidance to improve your overall health.",
+                  icon: <Eye className="w-6 h-6" />,
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl relative group hover:bg-slate-800/60 hover:border-indigo-500/50 transition-all"
+                >
+                  <div className="text-5xl font-bold text-slate-800 absolute top-4 right-4 z-0 pointer-events-none group-hover:text-indigo-900/30 transition-colors">
+                    {item.step}
+                  </div>
+                  <div className="relative z-10">
+                    <div className="text-indigo-400 mb-4">{item.icon}</div>
+                    <h4 className="text-lg font-bold text-slate-100 mb-2">
+                      {item.title}
+                    </h4>
+                    <p className="text-sm text-slate-400 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          <div className="lg:w-1/2 order-1 lg:order-2">
-            <div className="inline-block px-4 py-1.5 bg-blue-500/20 text-blue-400 rounded-full text-sm font-bold mb-6 uppercase border border-blue-500/30">
-              🚀 Coming Soon
-            </div>
-            <h2 className="text-4xl font-extrabold mb-4">
-              Smart Chat. Smarter Health.
-            </h2>
-            <h3 className="text-2xl font-medium text-blue-300 mb-6">
-              Meet Your AI Health Assistant
-            </h3>
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-              Coming soon at Diagnostic Kart — a smart chatbot that understands
-              you, your lifestyle, and your health needs. No more guessing which
-              tests to take[cite: 12].
-            </p>
+          {/* ROW 3: Three Pillars (Why It Matters, Pets, Vision) */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            {/* Box 1: Why This Matters */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-8 rounded-3xl shadow-xl"
+            >
+              <div className="inline-flex items-center gap-2 text-cyan-400 font-bold mb-6">
+                <Target className="w-6 h-6" /> Why This Matters
+              </div>
+              <ul className="space-y-4">
+                {[
+                  "No more confusing test lists",
+                  "No unnecessary spending",
+                  "No generic reports",
+                  "Only relevant, personalized diagnostics",
+                ].map((text, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
+                    <span className="text-slate-300 font-medium">{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-            <div className="space-y-6 mb-10">
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
-                  💬
-                </div>
-                <div>
-                  <h4 className="font-bold text-white text-lg">Chat with AI</h4>
-                  <p className="text-slate-400">
-                    Answer easy questions about your lifestyle, diet, sleep &
-                    habits.
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
-                  🧠
-                </div>
-                <div>
-                  <h4 className="font-bold text-white text-lg">
-                    Smart Analysis & Custom Profile
-                  </h4>
-                  <p className="text-slate-400">
-                    Our AI studies your inputs to design a profile only for you.
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center shrink-0 border border-slate-700">
-                  🎯
-                </div>
-                <div>
-                  <h4 className="font-bold text-white text-lg">
-                    Right Tests Suggested
-                  </h4>
-                  <p className="text-slate-400">
-                    No unnecessary tests. Actionable insights with clear
-                    guidance to improve your health[cite: 12].
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Box 2: Pets */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{ delay: 0.2 }}
+              className="bg-gradient-to-br from-indigo-900/40 to-slate-900 border border-indigo-500/30 p-8 rounded-3xl shadow-xl relative overflow-hidden group"
+            >
+              {/* Watermark */}
+              <PawPrint className="absolute -bottom-10 -right-10 w-64 h-64 text-indigo-500/10 transform group-hover:scale-110 transition-transform duration-700 pointer-events-none" />
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-500 transition-colors">
-                Join Early Access
-              </button>
-              <button className="bg-transparent border border-slate-600 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 transition-colors">
-                Get Notified
-              </button>
-            </div>
+              <div className="inline-flex items-center gap-2 text-indigo-300 font-bold mb-6 relative z-10">
+                <PawPrint className="w-6 h-6" /> For You & Your Pets
+              </div>
+              <p className="text-slate-300 font-medium leading-relaxed relative z-10 text-lg">
+                Our AI doesn’t stop at humans. It also helps create{" "}
+                <span className="text-indigo-200 font-bold">
+                  health profiles for your pets
+                </span>
+                , analyzing their unique lifestyle and conditions.
+              </p>
+            </motion.div>
+
+            {/* Box 3: Vision */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-8 rounded-3xl shadow-xl flex flex-col justify-center"
+            >
+              <div className="inline-flex items-center gap-2 text-white font-bold mb-6">
+                <Eye className="w-6 h-6" /> Our Vision
+              </div>
+              <h4 className="text-2xl font-serif text-slate-100 mb-2 italic">
+                Your health is unique.
+              </h4>
+              <h4 className="text-2xl font-serif text-slate-400 mb-8 italic">
+                Your tests should be too.
+              </h4>
+
+              <div className="flex gap-4 items-center font-bold text-sm tracking-widest uppercase text-indigo-400">
+                <span>Simple</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+                <span>Smart</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+                <span>Personalized</span>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
-
-      {/* ================= CALL TO ACTION / FOOTER ================= */}
-      <footer className="bg-white py-20 px-6 text-center border-t border-slate-100">
-        <h2 className="text-4xl font-extrabold text-slate-900 mb-6">
-          Start Your Health Journey Today
-        </h2>
-        <p className="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
-          Whether for you or your pet, get diagnostics that truly understand
-          your needs.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-          <button className="bg-slate-900 text-white px-10 py-4 rounded-full font-bold shadow-xl hover:bg-blue-600 transition-all hover:-translate-y-1">
-            Create Your Personalized Profile
-          </button>
-          <button className="bg-blue-50 text-blue-700 px-10 py-4 rounded-full font-bold hover:bg-blue-100 transition-colors">
-            Book a Test Now
-          </button>
-        </div>
-        <div className="pt-10 border-t border-slate-100 text-slate-400 font-medium">
-          <span className="text-blue-600 font-bold">Diagnostic Kart</span> is
-          not just a lab. It’s a smarter way to understand health[cite: 12].
-        </div>
-      </footer>
     </div>
   );
 }

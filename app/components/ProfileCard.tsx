@@ -50,7 +50,7 @@ export default function ProfileCard({ profile }: any) {
           <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">
             Total Price
           </span>
-          <span className="text-2xl font-black text-slate-900">
+          <span className="text-2xl font-bold text-slate-900">
             ₹{profile.price}
           </span>
         </div>
