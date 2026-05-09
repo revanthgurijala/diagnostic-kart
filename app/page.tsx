@@ -73,45 +73,58 @@ export default function Home() {
       {/* ================= HERO SECTION ================= */}
       <section
         id="home"
-        className="relative bg-white pt-8 pb-16 px-6 text-center overflow-hidden border-b border-slate-100"
+        // Changed to justify-start on mobile to push text up, and bg-bottom to put the image below the text
+        className="relative min-h-[calc(100vh-80px)] flex flex-col justify-start md:justify-center bg-slate-900 bg-[url('/DK-Web.png')] bg-contain bg-bottom md:bg-right bg-no-repeat px-6 lg:px-16 pt-12 md:pt-0 text-left overflow-hidden border-b border-slate-800"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent)] pointer-events-none" />
+        {/* Bulletproof Mobile & Desktop Gradient: Ensures the top half of mobile is solid dark for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-slate-900 from-50% md:from-40% via-slate-900/80 via-75% md:via-60% to-transparent to-100% md:to-90% pointer-events-none" />
 
-        <div className="inline-flex flex-wrap justify-center items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 mb-8 text-xs md:text-sm font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-[2rem] shadow-sm mt-4">
-          <Microscope className="w-3.5 h-3.5 md:w-4 md:h-4" /> Scientific
-          <span className="text-blue-300">•</span>
-          <Activity className="w-3.5 h-3.5 md:w-4 md:h-4" /> Personalized
-          <span className="text-blue-300">•</span>
-          <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> Reliable
-        </div>
+        {/* Content wrapper */}
+        <div className="relative z-10 max-w-2xl py-16 md:py-20">
+          <div className="inline-flex flex-wrap items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 mb-8 text-xs md:text-sm font-bold text-blue-300 bg-slate-800/50 backdrop-blur-md border border-slate-700/50 rounded-[2rem] shadow-sm mt-4">
+            <Microscope className="w-3.5 h-3.5 md:w-4 md:h-4" /> Scientific
+            <span className="text-slate-500">•</span>
+            <Activity className="w-3.5 h-3.5 md:w-4 md:h-4" /> Personalized
+            <span className="text-slate-500">•</span>
+            <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4" /> Reliable
+          </div>
 
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-8 max-w-5xl mx-auto leading-[1.2] font-serif">
-          Not Just for You. <br />
-          <span className="font-serif italic font-normal text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 mt-4 inline-block tracking-wide">
-            For Your Loved Ones Too.
-          </span>
-        </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 leading-[1.2] font-serif drop-shadow-md">
+            Not Just for You. <br />
+            <span className="font-serif italic font-normal text-4xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 mt-4 inline-block tracking-wide drop-shadow-md">
+              For Your Loved Ones Too.
+            </span>
+          </h1>
 
-        <p className="max-w-3xl mx-auto text-base md:text-lg text-slate-600 font-sans font-medium leading-relaxed mb-12">
-          At Diagnostic Kart, care goes beyond humans. We provide advanced
-          diagnostics for you and your beloved pets—because every life matters.
-        </p>
+          <p className="text-base md:text-lg text-slate-300 font-sans font-medium leading-relaxed mb-12 drop-shadow-md">
+            At Diagnostic Kart, care goes beyond humans. We provide advanced
+            diagnostics for you and your beloved pets—because every life
+            matters.
+          </p>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-6">
-          <button className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all hover:-translate-y-1 text-lg">
-            Book Your Test <ArrowRight className="w-5 h-5" />
-          </button>
-          <button className="flex items-center justify-center gap-2 bg-white border-2 border-slate-200 text-slate-800 px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-300 hover:bg-slate-50 transition-all hover:-translate-y-1 text-lg">
-            Explore Health Profiles <Activity className="w-5 h-5" />
-          </button>
+          <div className="flex flex-col sm:flex-row justify-start gap-4 md:gap-6">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/50 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg border border-blue-500">
+              Book Your Test <ArrowRight className="w-5 h-5" />
+            </button>
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-slate-800/60 border border-slate-600 text-white px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-400 hover:bg-slate-700 transition-all hover:-translate-y-1 text-lg backdrop-blur-sm">
+              Explore Health Profiles <Activity className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       </section>
 
       {/* ================= ABOUT US (WHO WE ARE & DIFFERENCE) ================= */}
       <section
         id="about"
-        className="relative py-20 px-6 bg-slate-50 overflow-hidden"
+        className="relative py-20 px-6 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-100/50 overflow-hidden border-b border-blue-100/50"
       >
+        {/* Centered on mobile, moved left on desktop. Responsive sizing. */}
+        <div className="absolute left-1/2 md:left-1/4 top-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-500/10 pointer-events-none z-0 transform -rotate-12">
+          <Dna
+            className="w-[350px] h-[350px] md:w-[700px] md:h-[700px]"
+            strokeWidth={0.5}
+          />
+        </div>
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-400/10 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none" />
 
@@ -123,7 +136,8 @@ export default function Home() {
                 <Info className="w-4 h-4" /> Who We Are
               </div>
 
-              <h2 className="text-4xl font-bold text-slate-900 mb-6 tracking-tight leading-tight font-serif">
+              {/* Added responsive text sizing (text-3xl on mobile, text-4xl on desktop) */}
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight leading-tight font-serif">
                 Diagnostics Designed <br />
                 <span className="text-blue-600 font-serif">Around You.</span>
               </h2>
@@ -135,31 +149,32 @@ export default function Home() {
                 based on:
               </p>
 
-              {/* REMOVED mt-auto to fix the massive gap! Replaced with mt-4 */}
               <div className="grid sm:grid-cols-2 gap-4 mt-4">
                 {[
                   {
                     text: "Lifestyle & Habits",
-                    icon: <HeartPulse className="w-6 h-6 text-blue-600" />,
+                    // Removed text-blue-600 from the icon itself
+                    icon: <HeartPulse className="w-6 h-6" />,
                   },
                   {
                     text: "Fitness Goals",
-                    icon: <Dumbbell className="w-6 h-6 text-blue-600" />,
+                    icon: <Dumbbell className="w-6 h-6" />,
                   },
                   {
                     text: "Medical History",
-                    icon: <ClipboardList className="w-6 h-6 text-blue-600" />,
+                    icon: <ClipboardList className="w-6 h-6" />,
                   },
                   {
                     text: "Clinical Insights",
-                    icon: <Dna className="w-6 h-6 text-blue-600" />,
+                    icon: <Dna className="w-6 h-6" />,
                   },
                 ].map((item, i) => (
                   <div
                     key={i}
                     className="group flex items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 cursor-default"
                   >
-                    <div className="p-3 bg-blue-50 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    {/* Added shrink-0 to prevent the icon box from squashing if text wraps on tiny screens */}
+                    <div className="shrink-0 p-3 bg-blue-50 rounded-xl text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                       <div className="text-current">{item.icon}</div>
                     </div>
                     <span className="text-slate-800 font-bold text-lg group-hover:text-blue-700 transition-colors">
@@ -171,14 +186,16 @@ export default function Home() {
             </div>
 
             {/* RIGHT SIDE: What Makes Us Different */}
-            <div className="relative bg-slate-900 text-white rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden border border-slate-800 flex flex-col h-full">
+            {/* Changed from flat bg-slate-900 to a distinct gradient to separate it from the Science section */}
+            <div className="relative bg-gradient-to-bl from-slate-800 to-indigo-950 text-white rounded-[2.5rem] p-8 md:p-14 shadow-2xl overflow-hidden border border-slate-700 flex flex-col h-full">
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full mix-blend-screen filter blur-[80px] opacity-30 pointer-events-none" />
 
               <div className="inline-flex items-center gap-2 mb-6 text-indigo-400 font-bold uppercase tracking-widest text-sm relative z-10">
                 <Sparkles className="w-5 h-5" /> The Difference
               </div>
 
-              <h2 className="text-4xl font-bold mb-8 tracking-tight leading-tight relative z-10 font-serif">
+              {/* Added responsive text sizing (text-3xl on mobile, text-4xl on desktop) */}
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 tracking-tight leading-tight relative z-10 font-serif">
                 Not Traditional. <br />
                 <span className="text-slate-400 font-serif">
                   Not Generic.
@@ -224,264 +241,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= OUR SERVICES (ANIMATED) ================= */}
-      <section
-        id="services"
-        className="relative py-20 px-6 bg-slate-50 overflow-hidden border-t border-slate-200"
-      >
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
-              <Activity className="w-5 h-5" /> Comprehensive Care
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight">
-              Our Services
-            </h2>
-          </motion.div>
-
-          <div className="space-y-12">
-            {/* 1. HUMAN DIAGNOSTICS */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative bg-gradient-to-br from-white via-blue-50/50 to-indigo-50 border border-blue-100 rounded-[2.5rem] p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] overflow-hidden group"
-            >
-              <div className="absolute -right-24 top-1/2 -translate-y-1/2 text-blue-200/40 pointer-events-none z-0 transform group-hover:scale-110 transition-transform duration-1000">
-                <User size={500} strokeWidth={0.5} />
-              </div>
-
-              <div className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-                <div className="lg:w-1/3">
-                  <div className="p-4 bg-blue-600 text-white rounded-3xl w-max mb-6 shadow-lg shadow-blue-200">
-                    <User className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-4xl font-bold text-slate-900 font-serif mb-4 leading-tight">
-                    Human <br /> Diagnostics
-                  </h3>
-                  <p className="text-slate-600 text-lg font-medium">
-                    Advanced, highly personalized panels designed around your
-                    unique biology and lifestyle goals.
-                  </p>
-                </div>
-
-                <div className="lg:w-2/3 w-full">
-                  <ul className="grid sm:grid-cols-2 gap-4">
-                    {[
-                      {
-                        text: "Preventive health checkups",
-                        icon: <ShieldCheck className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Lifestyle-based health profiles",
-                        icon: <Activity className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Fitness & performance panels",
-                        icon: <Dumbbell className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Hormonal & metabolic testing",
-                        icon: <Beaker className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Advanced organ function analysis",
-                        icon: <Heart className="w-6 h-6" />,
-                      },
-                    ].map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-4 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-white shadow-sm hover:border-blue-300 hover:shadow-md transition-all cursor-default group/item"
-                      >
-                        <div className="text-blue-500 shrink-0 group-hover/item:scale-110 transition-transform">
-                          {item.icon}
-                        </div>
-                        <span className="text-slate-800 font-bold text-lg">
-                          {item.text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* 2. PET DIAGNOSTICS */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, amount: 0.1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-[2.5rem] p-10 md:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden group text-white"
-            >
-              <div className="absolute -left-20 top-1/2 -translate-y-1/2 text-slate-600/20 pointer-events-none z-0 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-1000">
-                <PawPrint size={500} strokeWidth={0.5} />
-              </div>
-
-              <div className="relative z-10 flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center">
-                <div className="lg:w-1/3">
-                  <div className="p-4 bg-amber-500 text-slate-900 rounded-3xl w-max mb-6 shadow-lg shadow-amber-500/20">
-                    <PawPrint className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-4xl font-bold text-white font-serif mb-4 leading-tight">
-                    Pet <br /> Diagnostics
-                  </h3>
-                  <div className="bg-slate-800/80 border-l-4 border-amber-500 p-5 rounded-r-2xl mt-6 backdrop-blur-sm">
-                    <p className="text-amber-50 font-serif italic text-lg leading-snug">
-                      Because your pets deserve the{" "}
-                      <span className="text-amber-400 font-bold not-italic">
-                        same level of care
-                      </span>{" "}
-                      as you.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="lg:w-2/3 w-full">
-                  <ul className="grid sm:grid-cols-2 gap-4">
-                    {[
-                      {
-                        text: "Health screening for dogs & cats",
-                        icon: <Stethoscope className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Preventive wellness panels",
-                        icon: <ShieldCheck className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Infection & disease detection",
-                        icon: <Microscope className="w-6 h-6" />,
-                      },
-                      {
-                        text: "Nutrition & deficiency analysis",
-                        icon: <HeartPulse className="w-6 h-6" />,
-                      },
-                    ].map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-4 bg-slate-800/60 backdrop-blur-md p-4 rounded-2xl border border-slate-700 hover:border-amber-500/50 hover:bg-slate-800 transition-all cursor-default group/item"
-                      >
-                        <div className="text-amber-500 shrink-0 group-hover/item:scale-110 transition-transform">
-                          {item.icon}
-                        </div>
-                        <span className="text-slate-200 font-bold text-lg">
-                          {item.text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= HOW IT WORKS ================= */}
-      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
-        <div className="max-w-7xl mx-auto relative z-10">
-          {/* Section Header (Animated to slide up) */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
-              <Settings className="w-5 h-5" /> The Process
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight mb-6">
-              Simple. Smart. Scientific.
-            </h2>
-            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
-              We’ve removed the guesswork from healthcare. Getting the right
-              tests is now as easy as 1-2-3-4.
-            </p>
-          </motion.div>
-
-          {/* Steps Timeline Grid */}
-          <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-            {/* Horizontal Connecting Line (Visible only on large screens) */}
-            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-100 via-indigo-200 to-blue-100 z-0"></div>
-
-            {[
-              {
-                num: "1",
-                title: "Answer a few questions",
-                desc: "We understand your lifestyle, habits & health goals.",
-                icon: <ClipboardList className="w-8 h-8" />,
-                delay: 0.1,
-              },
-              {
-                num: "2",
-                title: "Get a personalized profile",
-                desc: "AI + medical expertise designs your test plan.",
-                icon: <Brain className="w-8 h-8" />,
-                delay: 0.3,
-              },
-              {
-                num: "3",
-                title: "Sample collection & testing",
-                desc: "Safe, accurate, and incredibly convenient.",
-                icon: <TestTubes className="w-8 h-8" />,
-                delay: 0.5,
-              },
-              {
-                num: "4",
-                title: "Smart reports & insights",
-                desc: "Actionable results—not just confusing numbers.",
-                icon: <LineChart className="w-8 h-8" />,
-                delay: 0.7,
-              },
-            ].map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{
-                  duration: 0.6,
-                  delay: step.delay,
-                  ease: "easeOut",
-                }}
-                className="relative z-10 flex flex-col items-center text-center group"
-              >
-                {/* Icon Container with Hover Animation */}
-                <div className="w-24 h-24 bg-white border-4 border-slate-50 shadow-xl rounded-full flex items-center justify-center text-blue-600 mb-8 relative group-hover:border-blue-100 group-hover:shadow-blue-200 group-hover:-translate-y-2 transition-all duration-300">
-                  {/* Floating Number Badge */}
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                    {step.num}
-                  </div>
-                  <div className="transform group-hover:scale-110 transition-transform duration-300">
-                    {step.icon}
-                  </div>
-                </div>
-
-                <h3 className="text-2xl font-bold text-slate-900 mb-3 font-serif">
-                  {step.title}
-                </h3>
-                <p className="text-slate-500 font-medium leading-relaxed">
-                  {step.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ================= SCIENCE BEHIND OUR APPROACH ================= */}
       <section
         id="science"
-        className="relative py-24 px-6 bg-slate-900 text-white overflow-hidden"
+        // Changed to bg-slate-950 and added a top border to visually separate it from the section above
+        className="relative py-24 px-6 bg-slate-950 text-white overflow-hidden border-t border-slate-800"
       >
+        {/* Hidden right edge on mobile, full visibility on desktop. Responsive sizing. */}
+        <div className="absolute right-[-20%] md:right-32 top-1/2 -translate-y-1/2 text-blue-400/10 pointer-events-none z-0 transform rotate-12">
+          <Microscope
+            className="w-[350px] h-[350px] md:w-[700px] md:h-[700px]"
+            strokeWidth={0.5}
+          />
+        </div>
+
         {/* Abstract Data Background */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5" />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[120px] pointer-events-none" />
@@ -577,15 +350,16 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: false, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: pillar.delay }}
-                  className="flex items-center gap-6 bg-slate-800/80 border border-slate-700 p-6 rounded-3xl shadow-xl hover:-translate-y-1 transition-transform cursor-default"
+                  className="flex items-start md:items-center gap-4 md:gap-6 bg-slate-800/80 border border-slate-700 p-6 rounded-3xl shadow-xl hover:-translate-y-1 transition-transform cursor-default"
                 >
                   <div
-                    className={`p-4 rounded-2xl bg-gradient-to-br ${pillar.color} text-white shadow-lg`}
+                    className={`p-4 rounded-2xl bg-gradient-to-br ${pillar.color} text-white shadow-lg shrink-0`}
                   >
                     {pillar.icon}
                   </div>
                   <div>
-                    <h4 className="text-2xl font-bold text-white font-serif tracking-wide">
+                    {/* Responsive text scaling: text-xl on mobile, text-2xl on desktop */}
+                    <h4 className="text-xl md:text-2xl font-bold text-white font-serif tracking-wide mt-1 md:mt-0">
                       {pillar.title}
                     </h4>
                     <p className="text-slate-400 font-medium mt-1">
@@ -599,10 +373,291 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= OUR SERVICES (ANIMATED) ================= */}
+      <section
+        id="services"
+        className="relative py-20 px-6 bg-slate-50 overflow-hidden border-t border-slate-200"
+      >
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
+              <Activity className="w-5 h-5" /> Comprehensive Care
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight">
+              Our Services
+            </h2>
+          </motion.div>
+
+          <div className="space-y-12">
+            {/* 1. HUMAN DIAGNOSTICS */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative bg-gradient-to-br from-white via-blue-50/50 to-indigo-50 border border-blue-100 rounded-[2.5rem] p-6 md:p-14 shadow-[0_20px_60px_-15px_rgba(59,130,246,0.15)] overflow-hidden group"
+            >
+              <div className="absolute -right-10 md:-right-24 top-1/2 -translate-y-1/2 text-blue-200/40 pointer-events-none z-0 transform group-hover:scale-110 transition-transform duration-1000">
+                {/* Changed fixed size to responsive width/height classes */}
+                <User
+                  className="w-[300px] h-[300px] md:w-[500px] md:h-[500px]"
+                  strokeWidth={0.5}
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
+                <div className="lg:w-1/3">
+                  <div className="p-4 bg-blue-600 text-white rounded-3xl w-max mb-6 shadow-lg shadow-blue-200">
+                    <User className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-4xl font-bold text-slate-900 font-serif mb-4 leading-tight">
+                    Human <br /> Diagnostics
+                  </h3>
+                  <p className="text-slate-600 text-lg font-medium">
+                    Advanced, highly personalized panels designed around your
+                    unique biology and lifestyle goals.
+                  </p>
+                </div>
+
+                <div className="lg:w-2/3 w-full">
+                  <ul className="grid sm:grid-cols-2 gap-4">
+                    {[
+                      {
+                        text: "Preventive health checkups",
+                        icon: <ShieldCheck className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Lifestyle-based health profiles",
+                        icon: <Activity className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Fitness & performance panels",
+                        icon: <Dumbbell className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Hormonal & metabolic testing",
+                        icon: <Beaker className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Advanced organ function analysis",
+                        icon: <Heart className="w-6 h-6" />,
+                      },
+                    ].map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-4 bg-white/80 backdrop-blur-md p-4 rounded-2xl border border-white shadow-sm hover:border-blue-300 hover:shadow-md transition-all cursor-default group/item"
+                      >
+                        <div className="text-blue-500 shrink-0 group-hover/item:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                        <span className="text-slate-800 font-bold text-lg">
+                          {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* 2. PET DIAGNOSTICS */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-[2.5rem] p-6 md:p-14 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] overflow-hidden group text-white"
+            >
+              <div className="absolute -left-10 md:-left-20 top-1/2 -translate-y-1/2 text-slate-600/20 pointer-events-none z-0 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-1000">
+                {/* Changed fixed size to responsive width/height classes */}
+                <PawPrint
+                  className="w-[300px] h-[300px] md:w-[500px] md:h-[500px]"
+                  strokeWidth={0.5}
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center">
+                <div className="lg:w-1/3">
+                  <div className="p-4 bg-amber-500 text-slate-900 rounded-3xl w-max mb-6 shadow-lg shadow-amber-500/20">
+                    <PawPrint className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-4xl font-bold text-white font-serif mb-4 leading-tight">
+                    Pet <br /> Diagnostics
+                  </h3>
+                  <div className="bg-slate-800/80 border-l-4 border-amber-500 p-5 rounded-r-2xl mt-6 backdrop-blur-sm">
+                    <p className="text-amber-50 font-serif italic text-lg leading-snug">
+                      Because your pets deserve the{" "}
+                      <span className="text-amber-400 font-bold not-italic">
+                        same level of care
+                      </span>{" "}
+                      as you.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:w-2/3 w-full">
+                  <ul className="grid sm:grid-cols-2 gap-4">
+                    {[
+                      {
+                        text: "Health screening for dogs & cats",
+                        icon: <Stethoscope className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Preventive wellness panels",
+                        icon: <ShieldCheck className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Infection & disease detection",
+                        icon: <Microscope className="w-6 h-6" />,
+                      },
+                      {
+                        text: "Nutrition & deficiency analysis",
+                        icon: <HeartPulse className="w-6 h-6" />,
+                      },
+                    ].map((item, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-4 bg-slate-800/60 backdrop-blur-md p-4 rounded-2xl border border-slate-700 hover:border-amber-500/50 hover:bg-slate-800 transition-all cursor-default group/item"
+                      >
+                        <div className="text-amber-500 shrink-0 group-hover/item:scale-110 transition-transform">
+                          {item.icon}
+                        </div>
+                        <span className="text-slate-200 font-bold text-lg">
+                          {item.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= HOW IT WORKS ================= */}
+      <section className="relative py-16 px-6 bg-gradient-to-b from-white via-slate-50 to-blue-50/50 overflow-hidden border-b border-blue-100/50">
+        {/* Large Process/Settings Watermark. Responsive sizing. */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-blue-500/5 pointer-events-none z-0 transform rotate-12">
+          <Settings
+            className="w-[400px] h-[400px] md:w-[800px] md:h-[800px]"
+            strokeWidth={0.5}
+          />
+        </div>
+
+        {/* Soft Ambient Background Glows to make it vibrant but clean */}
+        <div className="absolute top-0 left-[-10%] w-[600px] h-[600px] bg-blue-100/50 rounded-full mix-blend-multiply filter blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 right-[-10%] w-[600px] h-[600px] bg-indigo-100/40 rounded-full mix-blend-multiply filter blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Header (Animated to slide up) */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 mb-4 text-blue-600 font-bold uppercase tracking-widest text-sm">
+              <Settings className="w-5 h-5" /> The Process
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 font-serif tracking-tight mb-6">
+              Simple. Smart. Scientific.
+            </h2>
+            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
+              We’ve removed the guesswork from healthcare. Getting the right
+              tests is now as easy as 1-2-3-4.
+            </p>
+          </motion.div>
+
+          {/* Steps Timeline Grid */}
+          <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+            {/* Horizontal Connecting Line (Visible only on large screens) */}
+            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-100 via-indigo-200 to-blue-100 z-0"></div>
+
+            {[
+              {
+                num: "1",
+                title: "Answer a few questions",
+                desc: "We understand your lifestyle, habits & health goals.",
+                icon: <ClipboardList className="w-8 h-8" />,
+                delay: 0.1,
+              },
+              {
+                num: "2",
+                title: "Get a personalized profile",
+                desc: "AI + medical expertise designs your test plan.",
+                icon: <Brain className="w-8 h-8" />,
+                delay: 0.3,
+              },
+              {
+                num: "3",
+                title: "Sample collection & testing",
+                desc: "Safe, accurate, and incredibly convenient.",
+                icon: <TestTubes className="w-8 h-8" />,
+                delay: 0.5,
+              },
+              {
+                num: "4",
+                title: "Smart reports & insights",
+                desc: "Actionable results—not just confusing numbers.",
+                icon: <LineChart className="w-8 h-8" />,
+                delay: 0.7,
+              },
+            ].map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{
+                  duration: 0.6,
+                  delay: step.delay,
+                  ease: "easeOut",
+                }}
+                className="relative z-10 flex flex-col items-center text-center group"
+              >
+                {/* Icon Container with Hover Animation */}
+                <div className="w-24 h-24 bg-white border-4 border-slate-50 shadow-xl rounded-full flex items-center justify-center text-blue-600 mb-8 relative group-hover:border-blue-100 group-hover:shadow-blue-200 group-hover:-translate-y-2 transition-all duration-300">
+                  {/* Floating Number Badge */}
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                    {step.num}
+                  </div>
+                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+                    {step.icon}
+                  </div>
+                </div>
+
+                <h3 className="text-2xl font-bold text-slate-900 mb-3 font-serif">
+                  {step.title}
+                </h3>
+                <p className="text-slate-500 font-medium leading-relaxed">
+                  {step.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ================= WHY CHOOSE US ================= */}
-      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
+      <section className="relative py-16 px-6 bg-gradient-to-br from-cyan-50/60 via-white to-blue-50/80 overflow-hidden border-b border-cyan-100/50">
+        {/* Large Trust/Care Watermark. Adjusted left positioning for mobile. */}
+        <div className="absolute left-[-20%] md:left-[-5%] top-1/2 -translate-y-1/2 text-cyan-500/5 pointer-events-none z-0 transform -rotate-12">
+          <HeartHandshake
+            className="w-[400px] h-[400px] md:w-[800px] md:h-[800px]"
+            strokeWidth={0.5}
+          />
+        </div>
+
         {/* Very subtle background styling */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.05),transparent_50%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.05),transparent_50%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
@@ -655,7 +710,8 @@ export default function Home() {
                   key={i}
                   className="group flex items-center gap-6 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-xl hover:border-blue-300 hover:bg-blue-50/50 transition-all duration-300 cursor-default"
                 >
-                  <div className="p-4 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-inner">
+                  {/* Added shrink-0 to ensure the icon remains a perfect square */}
+                  <div className="shrink-0 p-4 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-inner">
                     {feature.icon}
                   </div>
                   <h4 className="text-xl font-bold text-slate-800 group-hover:text-blue-900 transition-colors">
@@ -669,10 +725,18 @@ export default function Home() {
       </section>
 
       {/* ================= OUR PHILOSOPHY (Redesigned) ================= */}
-      <section className="relative py-16 px-6 bg-white overflow-hidden border-b border-slate-100">
-        {/* Soft, airy background glows that extend to the edges */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50 rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none" />
+      <section className="relative py-20 px-6 bg-gradient-to-tr from-orange-50/50 via-amber-50/30 to-rose-50/40 overflow-hidden border-b border-amber-100/50">
+        {/* Large Philosophy/Idea Watermark. Responsive sizing. */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-amber-600/5 pointer-events-none z-0 transform rotate-6">
+          <Lightbulb
+            className="w-[350px] h-[350px] md:w-[700px] md:h-[700px]"
+            strokeWidth={0.5}
+          />
+        </div>
+
+        {/* Soft, airy background glows that extend to the edges - updated to match the warm theme */}
+        <div className="absolute top-0 right-[-10%] w-[600px] h-[600px] bg-amber-100/60 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none" />
+        <div className="absolute bottom-0 left-[-10%] w-[600px] h-[600px] bg-rose-100/50 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none" />
 
         <div className="max-w-6xl mx-auto relative z-10 text-center">
           <motion.div
@@ -681,9 +745,10 @@ export default function Home() {
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
           >
-            <Quote className="w-16 h-16 text-blue-100 mx-auto mb-8 transform -scale-x-100" />
+            {/* Changed from text-blue-100 to text-orange-200/80 to perfectly match the warm gradient background */}
+            <Quote className="w-16 h-16 text-orange-200/80 mx-auto mb-8 transform -scale-x-100" />
 
-            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-[0.3em] mb-8">
+            <h3 className="text-sm font-bold text-orange-200/80 uppercase tracking-[0.3em] mb-8">
               Our Philosophy
             </h3>
 
@@ -733,12 +798,9 @@ export default function Home() {
               your needs.
             </p>
 
+            {/* Added w-full to the button on mobile, keeping it auto-width (sm:w-auto) on desktop */}
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <button className="flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg group">
-                <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                Create Personalized Profile
-              </button>
-              <button className="flex items-center justify-center gap-3 bg-transparent border border-slate-600 text-slate-300 px-8 py-4 rounded-full font-bold hover:bg-slate-800 hover:text-white transition-all hover:-translate-y-1 text-lg group">
+              <button className="w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg group">
                 Book a Test Now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
@@ -915,13 +977,14 @@ export default function Home() {
 
               <div className="flex flex-col gap-4 bg-slate-900/50 p-6 rounded-2xl border border-slate-800 backdrop-blur-md">
                 <div className="flex items-center gap-4 text-indigo-200 font-medium text-lg">
-                  <div className="p-2 bg-indigo-500/20 rounded-lg">
+                  {/* Added shrink-0 so the icon stays perfectly square on mobile */}
+                  <div className="p-2 bg-indigo-500/20 rounded-lg shrink-0">
                     <MessageSquare className="w-5 h-5 text-indigo-400" />
                   </div>
                   Just answer a few simple questions...
                 </div>
                 <div className="flex items-center gap-4 text-cyan-200 font-medium text-lg">
-                  <div className="p-2 bg-cyan-500/20 rounded-lg">
+                  <div className="p-2 bg-cyan-500/20 rounded-lg shrink-0">
                     <Sparkles className="w-5 h-5 text-cyan-400" />
                   </div>
                   Get a personalized health profile instantly.
@@ -1010,7 +1073,7 @@ export default function Home() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl relative group hover:bg-slate-800/60 hover:border-indigo-500/50 transition-all"
                 >
-                  <div className="text-5xl font-bold text-slate-800 absolute top-4 right-4 z-0 pointer-events-none group-hover:text-indigo-900/30 transition-colors">
+                  <div className="text-5xl font-bold text-white/5 absolute top-4 right-4 z-0 pointer-events-none group-hover:text-indigo-400/20 transition-colors">
                     {item.step}
                   </div>
                   <div className="relative z-10">
@@ -1095,11 +1158,11 @@ export default function Home() {
                 Your tests should be too.
               </h4>
 
-              <div className="flex gap-4 items-center font-bold text-sm tracking-widest uppercase text-indigo-400">
+              <div className="flex flex-wrap gap-3 md:gap-4 items-center font-bold text-xs md:text-sm tracking-widest uppercase text-indigo-400 mt-auto">
                 <span>Simple</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-700 hidden sm:block" />
                 <span>Smart</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-700 hidden sm:block" />
                 <span>Personalized</span>
               </div>
             </motion.div>

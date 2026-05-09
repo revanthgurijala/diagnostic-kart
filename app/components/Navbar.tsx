@@ -46,17 +46,18 @@ export default function Navbar() {
             >
               Services
             </Link>
-            <Link
-              href="/#science"
-              className="text-slate-600 hover:text-blue-600 font-semibold transition-colors"
-            >
-              Science
-            </Link>
+
             <Link
               href="/#ai"
               className="text-slate-600 hover:text-blue-600 font-semibold transition-colors flex items-center gap-1"
             >
               <Zap className="w-4 h-4" /> AI Assistant
+            </Link>
+            <Link
+              href="/#blog"
+              className="text-slate-600 hover:text-blue-600 font-semibold transition-colors"
+            >
+              Blog
             </Link>
           </div>
 
@@ -100,17 +101,18 @@ export default function Navbar() {
           >
             Services
           </Link>
-          <Link
-            href="/#science"
-            className="block text-slate-600 font-semibold hover:text-blue-600"
-          >
-            Science
-          </Link>
+
           <Link
             href="/#ai"
             className="block text-slate-600 font-semibold hover:text-blue-600"
           >
             AI Assistant
+          </Link>
+          <Link
+            href="/#blog"
+            className="block text-slate-600 font-semibold hover:text-blue-600"
+          >
+            Blog
           </Link>
           <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl font-bold mt-4">
             Book a Test
