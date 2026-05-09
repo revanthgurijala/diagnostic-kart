@@ -15,7 +15,7 @@ export default function Navbar() {
           {/* LEFT: Logo Area */}
           <Link href="/#home" className="flex items-center gap-2">
             <Image
-              src="/logo.png"
+              src="/images/logo.png"
               alt="Diagnostic Kart Logo"
               width={40}
               height={40}
@@ -54,7 +54,7 @@ export default function Navbar() {
               <Zap className="w-4 h-4" /> AI Assistant
             </Link>
             <Link
-              href="/#blog"
+              href="/blog"
               className="text-slate-600 hover:text-blue-600 font-semibold transition-colors"
             >
               Blog
@@ -63,9 +63,12 @@ export default function Navbar() {
 
           {/* RIGHT: Call to Action Button */}
           <div className="hidden md:flex items-center">
-            <button className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold shadow-md shadow-blue-200 hover:bg-blue-700 transition-all hover:-translate-y-0.5">
+            <Link
+              href="/tests"
+              className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold shadow-md shadow-blue-200 hover:bg-blue-700 transition-all hover:-translate-y-0.5"
+            >
               Book a Test
-            </button>
+            </Link>
           </div>
 
           {/* MOBILE: Hamburger Button */}
@@ -109,14 +112,17 @@ export default function Navbar() {
             AI Assistant
           </Link>
           <Link
-            href="/#blog"
+            href="/blog"
             className="block text-slate-600 font-semibold hover:text-blue-600"
           >
             Blog
           </Link>
-          <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl font-bold mt-4">
+          <Link
+            href="/tests"
+            className="w-full block text-center bg-blue-600 text-white px-6 py-3 rounded-xl font-bold mt-4 hover:bg-blue-700 transition-colors"
+          >
             Book a Test
-          </button>
+          </Link>
         </div>
       )}
     </nav>

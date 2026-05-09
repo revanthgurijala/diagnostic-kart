@@ -22,7 +22,7 @@ export default function Footer() {
         <div className="pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
             <Image
-              src="/logo.png"
+              src="/images/logo.png"
               alt="Diagnostic Kart Logo"
               width={32}
               height={32}

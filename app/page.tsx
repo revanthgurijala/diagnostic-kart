@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 
+import Link from "next/link";
+
 import {
   Microscope,
   Activity,
@@ -74,7 +76,7 @@ export default function Home() {
       <section
         id="home"
         // Changed to justify-start on mobile to push text up, and bg-bottom to put the image below the text
-        className="relative min-h-[calc(100vh-80px)] flex flex-col justify-start md:justify-center bg-slate-900 bg-[url('/DK-Web.png')] bg-contain bg-bottom md:bg-right bg-no-repeat px-6 lg:px-16 pt-12 md:pt-0 text-left overflow-hidden border-b border-slate-800"
+        className="relative min-h-[calc(100vh-80px)] flex flex-col justify-start md:justify-center bg-slate-900 bg-[url('/images/DK-Web.png')] bg-contain bg-bottom md:bg-right bg-no-repeat px-6 lg:px-16 pt-12 md:pt-0 text-left overflow-hidden border-b border-slate-800"
       >
         {/* Bulletproof Mobile & Desktop Gradient: Ensures the top half of mobile is solid dark for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-slate-900 from-50% md:from-40% via-slate-900/80 via-75% md:via-60% to-transparent to-100% md:to-90% pointer-events-none" />
@@ -103,12 +105,18 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-start gap-4 md:gap-6">
-            <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/50 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg border border-blue-500">
+            <Link
+              href="/tests"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/50 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg border border-blue-500"
+            >
               Book Your Test <ArrowRight className="w-5 h-5" />
-            </button>
-            <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-slate-800/60 border border-slate-600 text-white px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-400 hover:bg-slate-700 transition-all hover:-translate-y-1 text-lg backdrop-blur-sm">
+            </Link>
+            <Link
+              href="/tests"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-slate-800/60 border border-slate-600 text-white px-8 py-4 rounded-full font-bold shadow-sm hover:border-slate-400 hover:bg-slate-700 transition-all hover:-translate-y-1 text-lg backdrop-blur-sm"
+            >
               Explore Health Profiles <Activity className="w-5 h-5" />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -800,10 +808,13 @@ export default function Home() {
 
             {/* Added w-full to the button on mobile, keeping it auto-width (sm:w-auto) on desktop */}
             <div className="flex flex-col sm:flex-row justify-center gap-6">
-              <button className="w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg group">
+              <Link
+                href="/tests"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-blue-900/20 hover:bg-blue-500 transition-all hover:-translate-y-1 text-lg group"
+              >
                 Book a Test Now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>
