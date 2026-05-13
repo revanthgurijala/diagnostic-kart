@@ -52,24 +52,6 @@ import ProfileCard from "./components/ProfileCard";
 export default function Home() {
   const [profiles, setProfiles] = useState([]);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/profiles/")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Backend is not responding");
-        }
-        return res.json();
-      })
-      .then((data) => setProfiles(data))
-      .catch((error) => {
-        console.error(
-          "Could not fetch profiles. Is the backend running?",
-          error,
-        );
-        setProfiles([]);
-      });
-  }, []);
-
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 selection:bg-blue-200">
       {/* ================= HERO SECTION ================= */}
