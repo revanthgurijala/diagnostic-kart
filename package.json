@@ -6,14 +6,17 @@
     "dev": "node --max-old-space-size=4096 ./node_modules/next/dist/bin/next dev",
     "build": "node --max-old-space-size=4096 ./node_modules/next/dist/bin/next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node --max-old-space-size=4096 ./node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "node --max-old-space-size=4096 ./node_modules/jest/bin/jest.js --watch --maxWorkers=1"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

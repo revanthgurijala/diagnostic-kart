@@ -4,8 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Zap } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return null;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (

@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return null;
   return (
     <footer className="bg-slate-950 border-t border-slate-900 mt-auto text-center">
       {/* Reduced py-16 to py-8 md:py-10 to shrink the outer gap */}
