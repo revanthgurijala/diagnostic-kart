@@ -3,7 +3,11 @@ export default function ProfileCard({ test }: any) {
     <div className="relative flex flex-col bg-white rounded-2xl p-0 shadow-sm border border-slate-100 hover:shadow-md transition-all h-full">
       {test.image ? (
         <img
-          src={`http://127.0.0.1:8000${test.image}`}
+          src={
+            test.image?.startsWith("http")
+              ? test.image
+              : `http://127.0.0.1:8000${test.image}`
+          }
           alt={test.name}
           className="w-full h-40 object-cover rounded-t-2xl"
         />

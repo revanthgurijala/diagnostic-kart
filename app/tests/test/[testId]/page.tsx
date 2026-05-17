@@ -37,7 +37,11 @@ export default function TestDetailsPage() {
       <div className="max-w-4xl mx-auto">
         {test.image && (
           <img
-            src={`http://127.0.0.1:8000${test.image}`}
+            src={
+              test.image?.startsWith("http")
+                ? test.image
+                : `http://127.0.0.1:8000${test.image}`
+            }
             alt={test.name}
             className="w-full h-80 object-cover rounded-2xl mb-8 shadow-sm"
           />

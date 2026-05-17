@@ -30,9 +30,20 @@ export default function TestsPage() {
   }, []);
 
   // Filter profiles based on the search term
-  const filteredProfiles = profiles.filter((profile) =>
-    profile.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredProfiles = profiles.filter((profile) => {
+    const searchLower = searchTerm.toLowerCase();
+
+    // 1. Does the profile name match?
+    const matchesProfileName = profile.name.toLowerCase().includes(searchLower);
+
+    // 2. Does ANY test inside this profile match?
+    const matchesTestName = profile.tests?.some((test: any) =>
+      test.name.toLowerCase().includes(searchLower),
+    );
+
+    // Return true if either matches
+    return matchesProfileName || matchesTestName;
+  });
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -71,7 +82,11 @@ export default function TestsPage() {
                 >
                   {profile.image && (
                     <img
-                      src={`http://127.0.0.1:8000${profile.image}`}
+                      src={
+                        profile.image?.startsWith("http")
+                          ? profile.image
+                          : `http://127.0.0.1:8000${profile.image}`
+                      }
                       alt={profile.name}
                       className="w-full h-48 object-cover rounded-xl mb-4"
                     />

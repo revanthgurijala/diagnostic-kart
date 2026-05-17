@@ -1,4 +1,6 @@
 "use client";
+
+import { useRouter } from "next/navigation";
 import * as XLSX from "xlsx";
 
 import React, { useState, useEffect } from "react";
@@ -12,10 +14,14 @@ import {
   Edit,
   ArrowLeft,
   Upload,
+  LogOut,
+  Lock,
 } from "lucide-react";
 
 export default function ClientDashboard() {
-  // --- STATE MANAGEMENT ---
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const router = useRouter();
+
   const [activeTab, setActiveTab] = useState("profiles");
   const [currentView, setCurrentView] = useState("list"); // 'list' or 'form'
 
@@ -51,8 +57,14 @@ export default function ClientDashboard() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+      router.push("/admin-login");
+    } else {
+      setIsCheckingAuth(false);
+      fetchData();
+    }
+  }, [router]);
 
   // 1. Reads the Excel file and shows the preview
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,13 +115,21 @@ export default function ClientDashboard() {
           price: item.price || 0,
           key_benefits: item.key_benefits || "",
           parameters: [],
+          profile_names: [], // Array to hold profile names from Excel
         };
       } else {
-        // If the box exists, but the previous rows missed the price or benefits, fill them in now
         if (item.price && !groupedTests[testName].price)
           groupedTests[testName].price = item.price;
         if (item.key_benefits && !groupedTests[testName].key_benefits)
           groupedTests[testName].key_benefits = item.key_benefits;
+      }
+
+      // If the excel row has a profile name, store it
+      if (
+        item.profile_name &&
+        !groupedTests[testName].profile_names.includes(item.profile_name)
+      ) {
+        groupedTests[testName].profile_names.push(item.profile_name);
       }
 
       // Add the parameter to this test's specific parameter list
@@ -126,30 +146,58 @@ export default function ClientDashboard() {
     for (const testName in groupedTests) {
       const testData = groupedTests[testName];
       const formData = new FormData();
-      
+
       formData.append("name", testData.name);
       formData.append("price", testData.price);
-      formData.append("key_benefits", testData.key_benefits || "Standard benefits");
+      formData.append(
+        "key_benefits",
+        testData.key_benefits || "Standard benefits",
+      );
       formData.append("parameters_json", JSON.stringify(testData.parameters));
+
+      // Map the string names from Excel to actual database Profile IDs
+      if (testData.profile_names.length > 0) {
+        const profileIds = testData.profile_names
+          .map((name: string) => {
+            const matchedProfile = profiles.find(
+              (p) => p.name.toLowerCase().trim() === name.toLowerCase().trim(),
+            );
+            return matchedProfile ? matchedProfile.id : null;
+          })
+          .filter(Boolean); // removes any nulls if the profile didn't exist
+
+        formData.append("profiles_json", JSON.stringify(profileIds));
+      }
 
       // 1. Check if the test already exists in our database (ignoring uppercase/lowercase differences)
       const existingTest = availableTests.find(
-        (t) => t.name.toLowerCase().trim() === testData.name.toLowerCase().trim()
+        (t) =>
+          t.name.toLowerCase().trim() === testData.name.toLowerCase().trim(),
       );
 
       try {
+        const token = localStorage.getItem("adminToken");
         if (existingTest) {
           // 2A. UPDATE: If it exists, send a PATCH request to its specific ID
-          const res = await fetch(`http://127.0.0.1:8000/api/tests/${existingTest.id}/`, {
-            method: "PATCH",
-            body: formData,
-          });
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/tests/${existingTest.id}/`,
+            {
+              method: "PATCH",
+              body: formData,
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            },
+          );
           if (res.ok) successCount++;
         } else {
           // 2B. CREATE: If it doesn't exist, send a POST request to create a new one
           const res = await fetch("http://127.0.0.1:8000/api/tests/", {
             method: "POST",
             body: formData,
+            headers: {
+              Authorization: `Token ${token}`,
+            },
           });
           if (res.ok) successCount++;
         }
@@ -190,7 +238,12 @@ export default function ClientDashboard() {
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/profiles/${id}/`,
-        { method: "DELETE" },
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Token ${localStorage.getItem("adminToken")}`,
+          },
+        },
       );
       if (response.ok) fetchData();
       else alert("Failed to delete.");
@@ -205,10 +258,6 @@ export default function ClientDashboard() {
     const imageFile = formData.get("image") as File;
     if (imageFile && imageFile.size === 0) formData.delete("image");
 
-    const selectedCheckboxes = Array.from(e.currentTarget.querySelectorAll('input[name="tests"]:checked'));
-    const testIds = selectedCheckboxes.map(cb => parseInt((cb as HTMLInputElement).value));
-    formData.append("tests_json", JSON.stringify(testIds));
-
     const isEditing = editingProfile !== null;
     const url = isEditing
       ? `http://127.0.0.1:8000/api/profiles/${editingProfile.id}/`
@@ -216,7 +265,13 @@ export default function ClientDashboard() {
     const method = isEditing ? "PATCH" : "POST";
 
     try {
-      const response = await fetch(url, { method, body: formData });
+      const response = await fetch(url, {
+        method,
+        body: formData,
+        headers: {
+          Authorization: `Token ${localStorage.getItem("adminToken")}`,
+        },
+      });
       if (response.ok) {
         alert(isEditing ? "Profile Updated!" : "Profile Created!");
         fetchData();
@@ -252,6 +307,9 @@ export default function ClientDashboard() {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/tests/${id}/`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("adminToken")}`,
+        },
       });
       if (response.ok) fetchData();
       else alert("Failed to delete.");
@@ -268,6 +326,14 @@ export default function ClientDashboard() {
 
     formData.append("parameters_json", JSON.stringify(testParams));
 
+    const selectedCheckboxes = Array.from(
+      e.currentTarget.querySelectorAll('input[name="profiles"]:checked'),
+    );
+    const profileIds = selectedCheckboxes.map((cb) =>
+      parseInt((cb as HTMLInputElement).value),
+    );
+    formData.append("profiles_json", JSON.stringify(profileIds));
+
     const isEditing = editingTest !== null;
     const url = isEditing
       ? `http://127.0.0.1:8000/api/tests/${editingTest.id}/`
@@ -275,7 +341,13 @@ export default function ClientDashboard() {
     const method = isEditing ? "PATCH" : "POST";
 
     try {
-      const response = await fetch(url, { method, body: formData });
+      const response = await fetch(url, {
+        method,
+        body: formData,
+        headers: {
+          Authorization: `Token ${localStorage.getItem("adminToken")}`,
+        },
+      });
       if (response.ok) {
         alert(isEditing ? "Test Updated!" : "Test Created!");
         fetchData();
@@ -296,10 +368,23 @@ export default function ClientDashboard() {
   const removeParamField = (index: number) =>
     setTestParams(testParams.filter((_, i) => i !== index));
 
+  if (isCheckingAuth) {
+    return (
+      <div className="h-screen w-full bg-slate-900 flex items-center justify-center font-sans text-white">
+        <div className="flex flex-col items-center gap-4">
+          <Lock className="w-8 h-8 text-blue-500 animate-pulse" />
+          <p className="font-bold tracking-widest text-sm uppercase">
+            Verifying Secure Access...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-slate-50 flex font-sans">
+    <div className="h-screen w-full overflow-hidden bg-slate-50 flex flex-col md:flex-row font-sans">
       {/* SIDEBAR NAVIGATION */}
-      <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col shadow-2xl">
+      <aside className="w-full md:w-64 flex-none h-auto md:h-full max-h-[40vh] md:max-h-full bg-slate-900 text-slate-300 flex flex-col shadow-2xl overflow-y-auto">
         <div className="p-6 border-b border-slate-800">
           <h1 className="text-xl font-extrabold text-white tracking-tight">
             Diagnostic <span className="text-blue-500">Admin</span>
@@ -327,6 +412,31 @@ export default function ClientDashboard() {
             <Users className="w-5 h-5" /> User Bookings
           </button>
         </nav>
+
+        {/* --- GLOBAL TOOLS SECTION --- */}
+        <div className="p-4 border-t border-slate-800 mt-auto">
+          <div className="relative overflow-hidden block w-full">
+            <button className="w-full bg-slate-800 hover:bg-slate-700 text-white p-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors border border-slate-700 shadow-sm">
+              <Upload className="w-5 h-5 text-green-400" /> Import Excel
+            </button>
+            <input
+              type="file"
+              accept=".xlsx, .xls, .csv"
+              onChange={handleFileUpload}
+              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+            />
+          </div>
+        </div>
+        {/* ADD THIS LOGOUT BUTTON */}
+        <button
+          onClick={() => {
+            localStorage.removeItem("adminToken");
+            router.push("/admin-login");
+          }}
+          className="w-fit mx-auto bg-red-900/30 hover:bg-red-900/60 text-red-400 py-2 px-6 rounded-xl font-semibold flex items-center justify-center gap-2 transition-colors border border-red-900/50 mt-4"
+        >
+          <LogOut className="w-5 h-5" /> Logout
+        </button>
       </aside>
 
       {/* MAIN CONTENT AREA */}
@@ -405,9 +515,13 @@ export default function ClientDashboard() {
                           <td className="p-5 font-bold text-slate-900 flex items-center gap-3">
                             {profile.image ? (
                               <img
-                                src={`http://127.0.0.1:8000${profile.image}`}
+                                src={
+                                  profile.image?.startsWith("http")
+                                    ? profile.image
+                                    : `http://127.0.0.1:8000${profile.image}`
+                                }
                                 alt=""
-                                className="w-10 h-10 rounded-lg object-cover"
+                                className="w-10 h-10 rounded-lg object-cover border border-slate-200"
                               />
                             ) : (
                               <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 text-xs">
@@ -534,36 +648,6 @@ export default function ClientDashboard() {
                   />
                 </div>
 
-                <div className="mt-4 pt-6 border-t border-slate-100">
-                  <label className="text-sm font-bold text-slate-900 mb-4 block">
-                    Select Medical Tests to Include
-                  </label>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                    {availableTests.map((test) => {
-                      const isChecked = editingProfile?.tests?.some(
-                        (t: any) => t.id === test.id,
-                      );
-                      return (
-                        <label
-                          key={test.id}
-                          className="flex items-center gap-3 cursor-pointer group"
-                        >
-                          <input
-                            type="checkbox"
-                            name="tests"
-                            value={test.id}
-                            defaultChecked={isChecked}
-                            className="w-5 h-5 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
-                          />
-                          <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600 transition-colors">
-                            {test.name}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 <div className="mt-8 flex justify-end">
                   <button
                     type="submit"
@@ -583,17 +667,14 @@ export default function ClientDashboard() {
           {/* TESTS: LIST VIEW */}
           {activeTab === "tests" && currentView === "list" && (
             <>
-              <div className="flex gap-4">
-                <div className="relative overflow-hidden inline-block">
-                  <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold shadow-md flex items-center gap-2 transition-colors">
-                    <Upload className="w-5 h-5" /> Import Excel
-                  </button>
-                  <input
-                    type="file"
-                    accept=".xlsx, .xls, .csv"
-                    onChange={handleFileUpload}
-                    className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-                  />
+              <div className="flex justify-between items-center mb-10">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                    Manage Medical Tests
+                  </h2>
+                  <p className="text-slate-500">
+                    Add or update the individual medical tests you offer.
+                  </p>
                 </div>
                 <button
                   onClick={handleAddNewTest}
@@ -640,9 +721,13 @@ export default function ClientDashboard() {
                           <td className="p-5 font-bold text-slate-900 flex items-center gap-3">
                             {test.image ? (
                               <img
-                                src={`http://127.0.0.1:8000${test.image}`}
+                                src={
+                                  test.image?.startsWith("http")
+                                    ? test.image
+                                    : `http://127.0.0.1:8000${test.image}`
+                                }
                                 alt=""
-                                className="w-10 h-10 rounded-lg object-cover"
+                                className="w-10 h-10 rounded-lg object-cover border border-slate-200"
                               />
                             ) : (
                               <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 text-xs">
@@ -821,6 +906,38 @@ export default function ClientDashboard() {
                         )}
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                {/* ASSIGN TO PROFILES SECTION */}
+                <div className="mt-6 pt-6 border-t border-slate-100">
+                  <label className="text-sm font-bold text-slate-900 mb-4 block">
+                    Assign to Health Profiles (Optional)
+                  </label>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-200 max-h-60 overflow-y-auto">
+                    {profiles.map((profile) => {
+                      // Because of our serializer change, editingTest.profiles is now an array of IDs
+                      const isChecked = editingTest?.profiles?.includes(
+                        profile.id,
+                      );
+                      return (
+                        <label
+                          key={profile.id}
+                          className="flex items-center gap-3 cursor-pointer group"
+                        >
+                          <input
+                            type="checkbox"
+                            name="profiles"
+                            value={profile.id}
+                            defaultChecked={isChecked}
+                            className="w-5 h-5 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+                          />
+                          <span className="text-sm font-bold text-slate-700 group-hover:text-blue-600 transition-colors">
+                            {profile.name}
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
