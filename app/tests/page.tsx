@@ -1,14 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Filter } from "lucide-react";
+import {
+  Search,
+  Filter,
+  MapPin,
+  User,
+  PawPrint,
+  ChevronDown,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link"; // We use Link to navigate safely
 
 export default function TestsPage() {
   const [profiles, setProfiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // Search state
+  const [searchTerm, setSearchTerm] = useState("");
+  const [location, setLocation] = useState("Hyderabad");
+  const [testType, setTestType] = useState("human");
 
   useEffect(() => {
     const fetchProfiles = async () => {
@@ -64,6 +73,48 @@ export default function TestsPage() {
               className="block w-full pl-12 pr-6 py-4 bg-slate-50 border border-slate-200 rounded-full text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Search for profiles..."
             />
+          </div>
+          {/* LOCATION & TYPE DROPDOWNS */}
+          <div className="max-w-2xl mx-auto mt-4 flex flex-col sm:flex-row gap-4 text-left">
+            {/* Location Dropdown */}
+            <div className="relative flex-1 group">
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-hover:text-blue-500 transition-colors pointer-events-none" />
+              <select
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl appearance-none outline-none focus:ring-2 focus:ring-blue-500 font-bold text-slate-700 cursor-pointer shadow-sm hover:border-blue-300 transition-all"
+              >
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Vijayawada" disabled>
+                  Vijayawada (Coming Soon)
+                </option>
+                <option value="Vizag" disabled>
+                  Vizag (Coming Soon)
+                </option>
+                <option value="Kakinada" disabled>
+                  Kakinada (Coming Soon)
+                </option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+            </div>
+
+            {/* Test Type Dropdown */}
+            <div className="relative flex-1 group">
+              {testType === "human" ? (
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-500 pointer-events-none" />
+              ) : (
+                <PawPrint className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-amber-500 pointer-events-none" />
+              )}
+              <select
+                value={testType}
+                onChange={(e) => setTestType(e.target.value)}
+                className="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl appearance-none outline-none focus:ring-2 focus:ring-blue-500 font-bold text-slate-700 cursor-pointer shadow-sm hover:border-blue-300 transition-all"
+              >
+                <option value="human">Human Diagnostics</option>
+                <option value="veterinary">Veterinary Diagnostics</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+            </div>
           </div>
         </div>
       </section>

@@ -16,6 +16,7 @@ import {
   Upload,
   LogOut,
   Lock,
+  CheckCircle,
 } from "lucide-react";
 
 export default function ClientDashboard() {
@@ -28,6 +29,7 @@ export default function ClientDashboard() {
   const [previewData, setPreviewData] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
 
+  const [bookings, setBookings] = useState<any[]>([]);
   const [profiles, setProfiles] = useState<any[]>([]);
   const [availableTests, setAvailableTests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,13 +44,18 @@ export default function ClientDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [profilesRes, testsRes] = await Promise.all([
+      const token = localStorage.getItem("adminToken");
+      const headers = { Authorization: `Token ${token}` };
+
+      const [profilesRes, testsRes, bookingsRes] = await Promise.all([
         fetch("http://127.0.0.1:8000/api/profiles/"),
         fetch("http://127.0.0.1:8000/api/tests/"),
+        fetch("http://127.0.0.1:8000/api/bookings/", { headers }),
       ]);
 
       if (profilesRes.ok) setProfiles(await profilesRes.json());
       if (testsRes.ok) setAvailableTests(await testsRes.json());
+      if (bookingsRes.ok) setBookings(await bookingsRes.json());
     } catch (error) {
       console.error("Network error");
     } finally {
@@ -442,16 +449,118 @@ export default function ClientDashboard() {
       {/* MAIN CONTENT AREA */}
       <main className="flex-1 p-10 overflow-y-auto">
         <div className="max-w-5xl mx-auto">
-          {/* BOOKINGS TAB (COMING SOON) */}
+          {/* =========================================================================
+              USER BOOKINGS TAB 
+              ========================================================================= */}
           {activeTab === "bookings" && (
-            <div className="text-center py-20">
-              <h2 className="text-2xl font-bold text-slate-400">
-                User Bookings
-              </h2>
-              <p className="text-slate-500 mt-2">
-                The booking management dashboard is coming soon.
-              </p>
-            </div>
+            <>
+              <div className="flex justify-between items-center mb-10">
+                <div>
+                  <h2 className="text-3xl font-bold text-slate-900 mb-2">
+                    User Bookings & Payments
+                  </h2>
+                  <p className="text-slate-500">
+                    Track all successful and pending test appointments.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse min-w-[800px]">
+                    <thead>
+                      <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 text-sm uppercase tracking-wider">
+                        <th className="p-5 font-bold">Patient Details</th>
+                        <th className="p-5 font-bold">Medical Test</th>
+                        <th className="p-5 font-bold">Appt. Date</th>
+                        <th className="p-5 font-bold">Amount</th>
+                        <th className="p-5 font-bold text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {loading ? (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="p-10 text-center text-slate-500"
+                          >
+                            Loading...
+                          </td>
+                        </tr>
+                      ) : bookings.length === 0 ? (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="p-10 text-center text-slate-500"
+                          >
+                            No bookings found.
+                          </td>
+                        </tr>
+                      ) : (
+                        bookings.map((booking) => (
+                          <tr
+                            key={booking.id}
+                            className="hover:bg-slate-50 transition-colors"
+                          >
+                            <td className="p-5">
+                              <div className="font-bold text-slate-900">
+                                {booking.patient_name}
+                              </div>
+                              <div className="text-xs text-slate-500 mt-1">
+                                {booking.phone_number}
+                              </div>
+                              {booking.email && (
+                                <div className="text-xs text-slate-500">
+                                  {booking.email}
+                                </div>
+                              )}
+                            </td>
+                            <td className="p-5 text-sm font-bold text-slate-700">
+                              {booking.test_name || "Custom/Deleted Test"}
+                            </td>
+                            <td className="p-5 text-sm text-slate-600 font-medium">
+                              <div className="font-bold text-slate-900">
+                                {new Date(
+                                  booking.appointment_date,
+                                ).toLocaleDateString()}
+                              </div>
+                              {booking.appointment_time && (
+                                <div className="text-xs text-blue-600 mt-1">
+                                  {/* Formats "14:30:00" to a readable format if needed, or simply display it */}
+                                  Time: {booking.appointment_time.slice(0, 5)}
+                                </div>
+                              )}
+                            </td>
+                            <td className="p-5 font-bold text-slate-900">
+                              ₹{booking.amount}
+                            </td>
+                            <td className="p-5 text-right">
+                              {booking.is_paid ? (
+                                <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 py-1.5 px-3 rounded-full text-xs font-bold border border-green-200">
+                                  <CheckCircle className="w-3 h-3" /> Paid
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 py-1.5 px-3 rounded-full text-xs font-bold border border-amber-200">
+                                  Pending/Failed
+                                </span>
+                              )}
+                              {booking.razorpay_payment_id && (
+                                <div
+                                  className="text-[10px] text-slate-400 mt-2 font-mono"
+                                  title="Razorpay Payment ID"
+                                >
+                                  {booking.razorpay_payment_id.slice(0, 12)}...
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
           )}
 
           {/* =========================================================================

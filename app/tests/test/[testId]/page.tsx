@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 export default function TestDetailsPage() {
   const params = useParams();
@@ -113,9 +114,12 @@ export default function TestDetailsPage() {
         </div>
 
         <div className="mt-12 text-center">
-          <button className="bg-slate-900 text-white px-10 py-4 rounded-xl text-lg font-bold shadow-lg hover:bg-blue-600 transition-colors">
+          <Link
+            href={`/book/${test.id}`}
+            className="inline-block bg-slate-900 text-white px-10 py-4 rounded-xl text-lg font-bold shadow-lg hover:bg-blue-600 transition-colors"
+          >
             Proceed to Booking
-          </button>
+          </Link>
         </div>
       </div>
     </div>
